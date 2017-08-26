@@ -13,9 +13,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
 
 import org.apache.log4j.Logger;
 
@@ -25,11 +23,11 @@ import com.p.interview.mgmt.pojo.CategoryDTO;
 /**
  * The Class TopicResource.
  */
-@Path("categories")
-public class CategoryResource {
+@Path("categories/{linkedCategoryID}/questions/{linkedQuestionID}/answers")
+public class AnswerResource {
 
 	/** The Constant logger. */
-	private static final Logger logger = Logger.getLogger(CategoryResource.class.getName());
+	private static final Logger logger = Logger.getLogger(AnswerResource.class.getName());
 
 	/**
 	 * Gets the all topics list.
@@ -58,8 +56,8 @@ public class CategoryResource {
 //			return Response.status(HttpURLConnection.HTTP_NOT_FOUND).entity(e).build();
 //		}
 		
-		return Response.status(HttpURLConnection.HTTP_OK).entity("{\"\":"
-				+ "\"get all category method called\""
+		return Response.status(HttpURLConnection.HTTP_OK).entity("{\"message\":"
+				+ "\"get all answers method called\""
 				+ "}").build();
 	}
 
@@ -73,11 +71,7 @@ public class CategoryResource {
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response get(/*@PathParam("id") int id*/@Context UriInfo ui) {
-		
-		MultivaluedMap<String, String> pathParams = ui.getPathParameters();
-		String idstr =pathParams.getFirst("id");
-		int id=Integer.parseInt(idstr);
+	public Response get(@PathParam("id") int id) {
 
 		logger.info("Entered into getCoachingList method");
 		String message = "successfully contacted the restful API server";
@@ -96,9 +90,9 @@ public class CategoryResource {
 //					.build();
 //		}
 		
-		return Response.status(HttpURLConnection.HTTP_OK).entity("{\"\":"
+		return Response.status(HttpURLConnection.HTTP_OK).entity("{\"message\":"
 				+ "\""
-				+ "get category method for id "
+				+ "get answer method for id "
 				+ id
 				+ " called"
 				+ "\""

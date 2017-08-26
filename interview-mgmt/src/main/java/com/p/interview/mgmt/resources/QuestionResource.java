@@ -25,11 +25,11 @@ import com.p.interview.mgmt.pojo.CategoryDTO;
 /**
  * The Class TopicResource.
  */
-@Path("categories")
-public class CategoryResource {
+@Path("categories/{linkedCategoryID}/questions")
+public class QuestionResource {
 
 	/** The Constant logger. */
-	private static final Logger logger = Logger.getLogger(CategoryResource.class.getName());
+	private static final Logger logger = Logger.getLogger(QuestionResource.class.getName());
 
 	/**
 	 * Gets the all topics list.
@@ -42,7 +42,7 @@ public class CategoryResource {
 
 		logger.info("Entered into getCoachingList method");
 		
-		logger.info("get all category method called");
+		logger.info("get all questions method called");
 		
 		
 		String message = "successfully contacted the restful API server";
@@ -58,8 +58,8 @@ public class CategoryResource {
 //			return Response.status(HttpURLConnection.HTTP_NOT_FOUND).entity(e).build();
 //		}
 		
-		return Response.status(HttpURLConnection.HTTP_OK).entity("{\"\":"
-				+ "\"get all category method called\""
+		return Response.status(HttpURLConnection.HTTP_OK).entity("{\"message\":"
+				+ "\"get all questions method called\""
 				+ "}").build();
 	}
 
@@ -83,7 +83,7 @@ public class CategoryResource {
 		String message = "successfully contacted the restful API server";
 		logger.info("Information : " + message);
 		
-		logger.info("get category method for id "
+		logger.info("get questions method for id "
 				+ id
 				+ " called");
 
@@ -96,9 +96,9 @@ public class CategoryResource {
 //					.build();
 //		}
 		
-		return Response.status(HttpURLConnection.HTTP_OK).entity("{\"\":"
+		return Response.status(HttpURLConnection.HTTP_OK).entity("{\"message\":"
 				+ "\""
-				+ "get category method for id "
+				+ "get question method for id "
 				+ id
 				+ " called"
 				+ "\""
