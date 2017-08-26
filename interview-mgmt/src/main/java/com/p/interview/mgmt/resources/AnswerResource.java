@@ -80,6 +80,7 @@ public class AnswerResource {
 		logger.info("get category method for id "
 				+ id
 				+ " called");
+		
 
 //		try {
 //			Topic topic = DAOFactory.getTopicSessionInterface().get(id);
