@@ -9,5 +9,9 @@ package com.p.interview.mgmt.pojo;
  * @author PREMENDRA
  */
 public abstract class AbstractDTO {
+	
+//	private Date dateCreated;
+//	private Date dateLastModified;
+//	private boolean personal;
     
 }

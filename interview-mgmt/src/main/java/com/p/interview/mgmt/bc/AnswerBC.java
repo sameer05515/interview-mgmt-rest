@@ -34,8 +34,8 @@ public class AnswerBC extends AbstractBC {
 		objAnswerDAO.update(objAnswerDTO);
 	}
 
-	public void retrieve(AnswerDTO objAnswerDTO) throws Exception {
-		objAnswerDAO.retrieve(objAnswerDTO);
+	public AnswerDTO retrieve(AnswerDTO objAnswerDTO) throws Exception {
+		return objAnswerDAO.retrieve(objAnswerDTO);
 	}
 
 	public Vector<AnswerDTO> fetchAllByQuestion(QuestionDTO objQuestionDTO) throws Exception {

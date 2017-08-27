@@ -35,8 +35,8 @@ public class QuestionBC extends AbstractBC {
 		objQuestionDAO.updateDetails(objQuestionDTO);
 	}
 
-	public void retrieve(QuestionDTO objQuestionDTO) throws Exception {
-		objQuestionDAO.retrieve(objQuestionDTO);
+	public QuestionDTO retrieve(QuestionDTO objQuestionDTO) throws Exception {
+		return objQuestionDAO.retrieve(objQuestionDTO);
 	}
 
 	public Vector<QuestionDTO> fetchAllByCategory(int linkedCategId)

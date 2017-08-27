@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Vector;
 
+import com.p.interview.mgmt.exception.RestServiceException;
 import com.p.interview.mgmt.pojo.CategoryDTO;
 
 
@@ -48,7 +49,7 @@ public class CategoryDAO extends AbstractDAO {
 	public void save(CategoryDTO objCategoryDTO) throws Exception {
 		Connection con=getConnection();
 		PreparedStatement ps = con
-				.prepareStatement("insert into t_category values (?,?)");
+				.prepareStatement("insert into t_category (cat_id,cat_name) values (?,?)");
 
 		int j = 1;
 		int nextWish_srno = generateNextsrno();
@@ -91,7 +92,7 @@ public class CategoryDAO extends AbstractDAO {
 		closeConnection(con);
 	}
 
-	public void retrieve(CategoryDTO objCategoryDTO) {
+	public CategoryDTO retrieve(CategoryDTO objCategoryDTO) throws Exception {
 		try {
 			ResultSet rs = null;
 			Connection con=getConnection();
@@ -101,18 +102,22 @@ public class CategoryDAO extends AbstractDAO {
 			ps.setInt(j++, objCategoryDTO.getCatID());
 
 			rs = ps.executeQuery();
-			while (rs.next()) {
+			if (rs.next()) {
 				// status = true;
 				objCategoryDTO.setCatID(rs.getInt("cat_id"));
 				objCategoryDTO.setCatgoryName(rs.getString("cat_name"));
 
 				// System.out.println("wish_srno = " + rs.getInt("wish_srno")
 				// + "\t  wish_stmt  = " + rs.getString("wish_stmt"));
+			}else{
+				throw new RestServiceException("404","can not find category for category id "+objCategoryDTO.getCatID());
 			}
 			closeConnection(con);
 		} catch (Exception ex) {
 			ex.printStackTrace();
+			throw ex;
 		}
+		return objCategoryDTO;
 	}
 
 	public Vector<CategoryDTO> fetchAll() throws Exception {

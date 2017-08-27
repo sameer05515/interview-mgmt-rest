@@ -9,9 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Vector;
 
+import com.p.interview.mgmt.exception.RestServiceException;
 import com.p.interview.mgmt.pojo.QuestionDTO;
-
-
 
 /**
  * 
@@ -24,7 +23,7 @@ public class QuestionDAO extends AbstractDAO {
 
 		try {
 			ResultSet rs = null;
-			Connection con=getConnection();
+			Connection con = getConnection();
 			PreparedStatement ps = con
 					.prepareStatement("select * from t_catg_ques where ques_id=? and linked_cat_id=? ");
 			int j = 1;
@@ -47,9 +46,8 @@ public class QuestionDAO extends AbstractDAO {
 	}
 
 	public void saveDetails(QuestionDTO objQuestionDTO) throws Exception {
-		Connection con=getConnection();
-		PreparedStatement ps = con
-				.prepareStatement("insert into t_catg_ques values (?,?,?)");
+		Connection con = getConnection();
+		PreparedStatement ps = con.prepareStatement("insert into t_catg_ques(ques_id,linked_cat_id,ques) values (?,?,?)");
 		// int id = Integer.parseInt(txtStudID.getText());
 		int j = 1;
 		int nextWish_srno = generateNextsrno(objQuestionDTO);
@@ -65,9 +63,8 @@ public class QuestionDAO extends AbstractDAO {
 	private int generateNextsrno(QuestionDTO objQuestionDTO) throws Exception {
 		int nextWish_srno = 0;
 		ResultSet rs = null;
-		Connection con=getConnection();
-		PreparedStatement ps = con
-				.prepareStatement("select max(ques_id) from t_catg_ques where linked_cat_id=? ");
+		Connection con = getConnection();
+		PreparedStatement ps = con.prepareStatement("select max(ques_id) from t_catg_ques where linked_cat_id=? ");
 
 		int j = 1;
 		ps.setInt(j++, objQuestionDTO.getLinkedCatID());
@@ -81,10 +78,9 @@ public class QuestionDAO extends AbstractDAO {
 	}
 
 	public void updateDetails(QuestionDTO objQuestionDTO) throws Exception {
-		Connection con=getConnection();
-		PreparedStatement ps = con
-				.prepareStatement("update t_catg_ques set "
-						+ "ques=? ,linked_cat_id=? where ques_id=? and linked_cat_id=? ");
+		Connection con = getConnection();
+		PreparedStatement ps = con.prepareStatement(
+				"update t_catg_ques set " + "ques=? ,linked_cat_id=? where ques_id=? and linked_cat_id=? ");
 		// int id = Integer.parseInt(txtStudID.getText());
 		int j = 1;
 		ps.setString(j++, objQuestionDTO.getQuestion());
@@ -97,10 +93,10 @@ public class QuestionDAO extends AbstractDAO {
 		closeConnection(con);
 	}
 
-	public void retrieve(QuestionDTO objQuestionDTO) {
+	public QuestionDTO retrieve(QuestionDTO objQuestionDTO) throws Exception {
 		try {
 			ResultSet rs = null;
-			Connection con=getConnection();
+			Connection con = getConnection();
 			PreparedStatement ps = con
 					.prepareStatement("select * from t_catg_ques where ques_id=? and linked_cat_id=?");
 			int j = 1;
@@ -108,29 +104,33 @@ public class QuestionDAO extends AbstractDAO {
 			ps.setInt(j++, objQuestionDTO.getLinkedCatID());
 
 			rs = ps.executeQuery();
-			while (rs.next()) {
+			if (rs.next()) {
 				// status = true;
 				objQuestionDTO.setQuestionID(rs.getInt("ques_id"));
 				objQuestionDTO.setLinkedCatID(rs.getInt("linked_cat_id"));
 				objQuestionDTO.setQuestion(rs.getString("ques"));
 
 				// System.out.println("wish_srno = " + rs.getInt("wish_srno")
-				// + "\t  wish_stmt  = " + rs.getString("wish_stmt"));
+				// + "\t wish_stmt = " + rs.getString("wish_stmt"));
+			} else {
+				throw new RestServiceException("404", "no question found for category id == "
+						+ objQuestionDTO.getLinkedCatID() + " and question id == " + objQuestionDTO.getQuestionID());
 			}
 			closeConnection(con);
 		} catch (Exception ex) {
 			ex.printStackTrace();
+			throw ex;
 		}
+		return objQuestionDTO;
 	}
 
-	public Vector<QuestionDTO> fetchAllByCategory(int linkedCategId)
-			throws Exception {
+	public Vector<QuestionDTO> fetchAllByCategory(int linkedCategId) throws Exception {
 		Vector<QuestionDTO> vecAllStudName = new Vector<QuestionDTO>();
 		ResultSet rs = null;
 
-		Connection con=getConnection();
-		PreparedStatement ps = con
-				.prepareStatement("select ques_id,linked_cat_id,ques from t_catg_ques where linked_cat_id=? order by ques_id");
+		Connection con = getConnection();
+		PreparedStatement ps = con.prepareStatement(
+				"select ques_id,linked_cat_id,ques from t_catg_ques where linked_cat_id=? order by ques_id");
 
 		int j = 1;
 		ps.setInt(j++, linkedCategId);
@@ -154,8 +154,8 @@ public class QuestionDAO extends AbstractDAO {
 		boolean isSuccess = false;
 		String msg = "";
 		PreparedStatement ps = null;
-		
-		Connection con=getConnection();
+
+		Connection con = getConnection();
 
 		msg = "";
 		// con = DBUtil.getInstance().getConnection();
@@ -172,7 +172,7 @@ public class QuestionDAO extends AbstractDAO {
 		} else {
 			msg = "Unable to delete Question from database ";
 		}
-		
+
 		closeConnection(con);
 
 		return msg;

@@ -29,6 +29,7 @@ public class PropertyUtil {
 				FileInputStream in = new FileInputStream(f);
 				thisInsatace.propCommonUtility.load(in);
 				log.debug("successfully loded property file : " + propFileName);
+				in.close();
 				return true;
 			} else {
 				log.debug("property file not found : " + propFileName);

@@ -34,8 +34,8 @@ public class CategoryBC extends AbstractBC {
 		objWishDAO.update(objWishDTO);
 	}
 
-	public void retrieve(CategoryDTO objWishDTO) throws Exception {
-		objWishDAO.retrieve(objWishDTO);
+	public CategoryDTO retrieve(CategoryDTO objWishDTO) throws Exception {
+		return objWishDAO.retrieve(objWishDTO);
 	}
 
 	public Vector<CategoryDTO> fetchAll() throws Exception {

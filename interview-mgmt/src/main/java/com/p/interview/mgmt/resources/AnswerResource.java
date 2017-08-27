@@ -1,6 +1,7 @@
 package com.p.interview.mgmt.resources;
 
 import java.net.HttpURLConnection;
+import java.util.Vector;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
@@ -17,8 +18,10 @@ import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
 
+import com.p.interview.mgmt.pojo.AnswerDTO;
 import com.p.interview.mgmt.pojo.CategoryDTO;
-
+import com.p.interview.mgmt.pojo.QuestionDTO;
+import com.p.interview.mgmt.rpc.InterviewRPC;
 
 /**
  * The Class TopicResource.
@@ -29,6 +32,8 @@ public class AnswerResource {
 	/** The Constant logger. */
 	private static final Logger logger = Logger.getLogger(AnswerResource.class.getName());
 
+	private InterviewRPC objInterviewRPC = new InterviewRPC();
+
 	/**
 	 * Gets the all topics list.
 	 *
@@ -36,29 +41,31 @@ public class AnswerResource {
 	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAll(@Context HttpServletRequest serveletRequest) {
+	public Response getAll(@Context HttpServletRequest serveletRequest,
+			@PathParam("linkedCategoryID") int linkedCategoryID, @PathParam("linkedQuestionID") int linkedQuestionID) {
 
 		logger.info("Entered into getCoachingList method");
-		
+
 		logger.info("get all category method called");
-		
-		
+
 		String message = "successfully contacted the restful API server";
-//		try {
-//
-//			List<Topic> topics = DAOFactory.getTopicSessionInterface().getAll();
-//
-//			logger.info("Information : " + message + topics);
-//			return Response.status(HttpURLConnection.HTTP_OK).entity(topics).build();
-//		} catch (RestServiceException e) {
-//
-//			e.printStackTrace();
-//			return Response.status(HttpURLConnection.HTTP_NOT_FOUND).entity(e).build();
-//		}
-		
-		return Response.status(HttpURLConnection.HTTP_OK).entity("{\"message\":"
-				+ "\"get all answers method called\""
-				+ "}").build();
+		Vector<AnswerDTO> list = new Vector<>();
+
+		QuestionDTO objQuestionDTO = new QuestionDTO();
+		objQuestionDTO.setQuestionID(linkedQuestionID);
+		objQuestionDTO.setLinkedCatID(linkedCategoryID);
+
+		try {
+
+			list = objInterviewRPC.fetchAllAnswersByQuestion(objQuestionDTO);
+
+			logger.info("Information : " + message + list);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(HttpURLConnection.HTTP_NOT_FOUND).entity(e).build();
+		}
+		return Response.status(HttpURLConnection.HTTP_OK).entity(list).build();
 	}
 
 	/**
@@ -71,33 +78,30 @@ public class AnswerResource {
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response get(@PathParam("id") int id) {
+	public Response get(@PathParam("id") int id, @PathParam("linkedCategoryID") int linkedCategoryID,
+			@PathParam("linkedQuestionID") int linkedQuestionID) {
 
 		logger.info("Entered into getCoachingList method");
 		String message = "successfully contacted the restful API server";
 		logger.info("Information : " + message);
-		
-		logger.info("get category method for id "
-				+ id
-				+ " called");
+
+		logger.info("get category method for id " + id + " called");
+
+		AnswerDTO objQuestionDTO = new AnswerDTO();
+		objQuestionDTO.setLinkedQuesID(linkedQuestionID);
+		objQuestionDTO.setLinkedCatID(linkedCategoryID);
+		objQuestionDTO.setAnsID(id);
 		
 
-//		try {
-//			Topic topic = DAOFactory.getTopicSessionInterface().get(id);
-//			return Response.status(HttpURLConnection.HTTP_OK).entity(topic).build();
-//		} catch (RestServiceException e) {
-//			e.printStackTrace();
-//			return Response.status(HttpURLConnection.HTTP_NOT_FOUND).entity("no topic found for given id : " + id)
-//					.build();
-//		}
-		
-		return Response.status(HttpURLConnection.HTTP_OK).entity("{\"message\":"
-				+ "\""
-				+ "get answer method for id "
-				+ id
-				+ " called"
-				+ "\""
-				+ "}").build();
+		try {
+			objQuestionDTO = objInterviewRPC.retrieveAnswer(objQuestionDTO);
+			return Response.status(HttpURLConnection.HTTP_OK).entity(objQuestionDTO).build();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(HttpURLConnection.HTTP_NOT_FOUND).entity("{\"status\":\"" + HttpURLConnection.HTTP_NOT_FOUND
+					+ "\", \"message\": \" no answer found for given id :  " + id + "\"}")
+					.build();
+		}
 
 	}
 
@@ -111,25 +115,32 @@ public class AnswerResource {
 	@DELETE
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response delete(@PathParam("id") int id) {
+	public Response delete(@PathParam("id") int id, @PathParam("linkedCategoryID") int linkedCategoryID,
+			@PathParam("linkedQuestionID") int linkedQuestionID) {
 
 		logger.info("Entered into getCoachingList method");
 		String message = "successfully contacted the restful API server";
+
+		logger.info("delete answer method for id " + id + " called");
 		
-		logger.info("delete category method for id "
-				+ id
-				+ " called");
-		CategoryDTO tt = null;
-		// for(CategoryDTO t:topics){
-		// if(t.getId()==id){
-		// tt=t;
-		// }
-		// }
+		String me = null;
+		
+		AnswerDTO objQuestionDTO = new AnswerDTO();
+		objQuestionDTO.setLinkedQuesID(linkedQuestionID);
+		objQuestionDTO.setLinkedCatID(linkedCategoryID);
+		objQuestionDTO.setAnsID(id);
+		
+		try {
+			me = objInterviewRPC.deleteAnswer(objQuestionDTO);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		logger.info("Information : " + message);
-		if (tt != null) {
-			return Response.status(HttpURLConnection.HTTP_OK).entity(tt).build();
+		if (me != null) {
+			return Response.status(HttpURLConnection.HTTP_OK).entity(me).build();
 		} else {
-			return Response.status(HttpURLConnection.HTTP_NOT_FOUND).entity("no topic found for given id : " + id)
+			return Response.status(HttpURLConnection.HTTP_NOT_FOUND).entity("{\"status\":\"" + HttpURLConnection.HTTP_NOT_FOUND
+					+ "\", \"message\": \" no answer found for given id :  " + id + "\"}")
 					.build();
 		}
 
@@ -138,90 +149,96 @@ public class AnswerResource {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response add(CategoryDTO topic) {
+	public Response add(AnswerDTO objAnswerDTO, @PathParam("linkedCategoryID") int linkedCategoryID,
+			@PathParam("linkedQuestionID") int linkedQuestionID) {
 
 		logger.info("Entered into getCoachingList method");
 
-//		logger.info("person.getFirstName()" + topic.getTitle() + "person.getLastName()" + topic.getDescription()
-//				+ "topic.isPersonal()" + topic.isPersonal());
+		// logger.info("person.getFirstName()" + topic.getTitle() +
+		// "person.getLastName()" + topic.getDescription()
+		// + "topic.isPersonal()" + topic.isPersonal());
 
 		String message = "successfully contacted the restful API server";
-		
-		
+
 		logger.info("Information : " + message);
-		
+
 		logger.info("save category method called");
 
 		/*
 		 * TODO Validation of the topic object came , and if any assertion is
 		 * failing, error response code should be returned to client
 		 */
-//		try {
-//			topic.setDateCreated(new Date());
-//			topic.setDateLastModified(new Date());
-//			int c = DAOFactory.getTopicSessionInterface().create(topic);
-//			return Response.status(HttpURLConnection.HTTP_OK).entity("{\"status\":\"" + HttpURLConnection.HTTP_OK
-//					+ "\", \"message\": \" Successfully created new topic : " + c + "\"}").build();
-//		} catch (RestServiceException e) {
-//
-//			/*
-//			 * TODO Error response code must be centralised, or if possible use
-//			 * SpringREST instead of Jersey framework
-//			 */
-//			e.printStackTrace();
-//			logger.info(e);
-//
-//			return Response.status(HttpURLConnection.HTTP_NOT_FOUND)
-//					.entity("{\"status\":\"" + HttpURLConnection.HTTP_NOT_FOUND
-//							+ "\", \"message\": \" Error while creating new topic : " + e + "\"}")
-//					.build();
-//		}
 		
-		return Response.status(HttpURLConnection.HTTP_OK).entity("{}").build();
+		objAnswerDTO.setLinkedCatID(linkedCategoryID);
+		objAnswerDTO.setLinkedQuesID(linkedQuestionID);
+		
+		try {
+			// topic.setDateCreated(new Date());
+			// topic.setDateLastModified(new Date());
+			int c = 1;
+			objInterviewRPC.saveAnswer(objAnswerDTO);
+			return Response.status(HttpURLConnection.HTTP_OK).entity("{\"status\":\"" + HttpURLConnection.HTTP_OK
+					+ "\", \"message\": \" Successfully created new topic : " + c + "\"}").build();
+		} catch (Exception e) {
+
+			/*
+			 * TODO Error response code must be centralised, or if possible use
+			 * SpringREST instead of Jersey framework
+			 */
+			e.printStackTrace();
+			logger.info(e);
+
+			return Response.status(HttpURLConnection.HTTP_NOT_FOUND)
+					.entity("{\"status\":\"" + HttpURLConnection.HTTP_NOT_FOUND
+							+ "\", \"message\": \" Error while creating new topic : " + e + "\"}")
+					.build();
+		}
 	}
 
 	@PUT
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response update(CategoryDTO topic) {
+	public Response update(AnswerDTO objAnswerDTO, @PathParam("linkedCategoryID") int linkedCategoryID,
+			@PathParam("linkedQuestionID") int linkedQuestionID) {
 
 		logger.info("Entered into getCoachingList method");
 
-//		logger.info("person.getFirstName()" + topic.getTitle() + "person.getLastName()" + topic.getDescription()
-//				+ "topic.isPersonal()" + topic.isPersonal());
+		// logger.info("person.getFirstName()" + topic.getTitle() +
+		// "person.getLastName()" + topic.getDescription()
+		// + "topic.isPersonal()" + topic.isPersonal());
 
 		String message = "successfully contacted the restful API server";
 		logger.info("Information : " + message);
-		
+
 		logger.info("update category method called");
 
 		/*
 		 * TODO Validation of the topic object came , and if any assertion is
 		 * failing, error response code should be returned to client
 		 */
+		objAnswerDTO.setLinkedCatID(linkedCategoryID);
+		objAnswerDTO.setLinkedQuesID(linkedQuestionID);
 
-//		try {
-//			topic.setDateLastModified(new Date());
-//			boolean b = DAOFactory.getTopicSessionInterface().update(topic);
-//
-//			return Response.status(HttpURLConnection.HTTP_OK)
-//					.entity("{\"status\":\""
-//							+ ((b && true) ? HttpURLConnection.HTTP_OK : HttpURLConnection.HTTP_INTERNAL_ERROR)
-//							+ "\", \"message\": \"" + ((b && true) ? "Successfully " : "Unsuccessfully ")
-//							+ "updated group " + topic.getId() + "\"}")
-//					.build();
-//
-//		} catch (RestServiceException e) {
-//
-//			e.printStackTrace();
-//			return Response.status(HttpURLConnection.HTTP_NOT_FOUND)
-//					.entity("{\"status\":\"" + HttpURLConnection.HTTP_NOT_FOUND
-//							+ "\", \"message\": \" Error while creating new topic : " + e + "\"}")
-//					.build();
-//		}
-		
-		
-		return Response.status(HttpURLConnection.HTTP_OK).entity("{}").build();
+		try {
+			// topic.setDateLastModified(new Date());
+			boolean b = true;
+			objInterviewRPC.updateAnswer(objAnswerDTO);
+
+			return Response.status(HttpURLConnection.HTTP_OK)
+					.entity("{\"status\":\""
+							+ ((b && true) ? HttpURLConnection.HTTP_OK : HttpURLConnection.HTTP_INTERNAL_ERROR)
+							+ "\", \"message\": \"" + ((b && true) ? "Successfully " : "Unsuccessfully ")
+							+ "updated group " + objAnswerDTO.getAnsID() + "\"}")
+					.build();
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			return Response.status(HttpURLConnection.HTTP_NOT_FOUND)
+					.entity("{\"status\":\"" + HttpURLConnection.HTTP_NOT_FOUND
+							+ "\", \"message\": \" Error while creating new topic : " + e + "\"}")
+					.build();
+		}
 	}
 
 }
