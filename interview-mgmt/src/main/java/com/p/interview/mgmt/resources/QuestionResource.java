@@ -144,7 +144,7 @@ public class QuestionResource {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response add(QuestionDTO objQuestionDTO,@PathParam("id") int id, @PathParam("linkedCategoryID") int linkedCategoryID) {
+	public Response add(QuestionDTO objQuestionDTO, @PathParam("linkedCategoryID") int linkedCategoryID) {
 
 		logger.info("Entered into getCoachingList method");
 
@@ -158,7 +158,7 @@ public class QuestionResource {
 
 		logger.info("save category method called");
 		
-		objQuestionDTO.setQuestionID(id);
+		//objQuestionDTO.setQuestionID(id);
 		objQuestionDTO.setLinkedCatID(linkedCategoryID);
 
 		/*
@@ -192,7 +192,7 @@ public class QuestionResource {
 	@PUT
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response update(QuestionDTO objQuestionDTO,@PathParam("id") int id, @PathParam("linkedCategoryID") int linkedCategoryID) {
+	public Response update(QuestionDTO objQuestionDTO, @PathParam("linkedCategoryID") int linkedCategoryID) {
 
 		logger.info("Entered into getCoachingList method");
 
@@ -205,7 +205,7 @@ public class QuestionResource {
 
 		logger.info("update category method called");
 		
-		objQuestionDTO.setQuestionID(id);
+		//objQuestionDTO.setQuestionID(id);
 		objQuestionDTO.setLinkedCatID(linkedCategoryID);
 
 		/*
