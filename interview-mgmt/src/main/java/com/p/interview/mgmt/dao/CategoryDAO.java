@@ -5,6 +5,7 @@
 package com.p.interview.mgmt.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Vector;
@@ -27,7 +28,7 @@ public class CategoryDAO extends AbstractDAO {
 			ResultSet rs = null;
 			Connection con=getConnection();
 			PreparedStatement ps = con
-					.prepareStatement("select * from t_category where cat_id=?");
+					.prepareStatement("select cat_id,cat_name,creation_date,last_updation_date from t_category where cat_id=?");
 
 			ps.setInt(1, objCategoryDTO.getCatID());
 
@@ -49,13 +50,18 @@ public class CategoryDAO extends AbstractDAO {
 	public void save(CategoryDTO objCategoryDTO) throws Exception {
 		Connection con=getConnection();
 		PreparedStatement ps = con
-				.prepareStatement("insert into t_category (cat_id,cat_name) values (?,?)");
+				.prepareStatement("insert into t_category (cat_id,cat_name,creation_date,last_updation_date) values (?,?,?,?)");
 
 		int j = 1;
 		int nextWish_srno = generateNextsrno();
 		objCategoryDTO.setCatID(nextWish_srno);
 		ps.setInt(j++, objCategoryDTO.getCatID());
 		ps.setString(j++, objCategoryDTO.getCatgoryName());
+		
+		java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
+		ps.setTimestamp(j++,  date);
+		ps.setTimestamp(j++,  date);
+		
 		ps.executeUpdate();
 		System.out.println("save");
 		closeConnection(con);
@@ -80,10 +86,14 @@ public class CategoryDAO extends AbstractDAO {
 	public void update(CategoryDTO objCategoryDTO) throws Exception {
 		Connection con=getConnection();
 		PreparedStatement ps = con.prepareStatement("update t_category set "
-				+ "cat_name=?  where cat_id=?");
+				+ "cat_name=?,last_updation_date=?  where cat_id=?");
 
 		int j = 1;
 		ps.setString(j++, objCategoryDTO.getCatgoryName());
+		
+		java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
+		ps.setTimestamp(j++,  date);
+
 
 		// where
 		ps.setInt(j++, objCategoryDTO.getCatID());
@@ -97,7 +107,7 @@ public class CategoryDAO extends AbstractDAO {
 			ResultSet rs = null;
 			Connection con=getConnection();
 			PreparedStatement ps = con
-					.prepareStatement("select * from t_category where cat_id=?");
+					.prepareStatement("select cat_id,cat_name,creation_date,last_updation_date from t_category where cat_id=?");
 			int j = 1;
 			ps.setInt(j++, objCategoryDTO.getCatID());
 
@@ -106,6 +116,11 @@ public class CategoryDAO extends AbstractDAO {
 				// status = true;
 				objCategoryDTO.setCatID(rs.getInt("cat_id"));
 				objCategoryDTO.setCatgoryName(rs.getString("cat_name"));
+
+				java.sql.Timestamp timestamp=rs.getTimestamp("creation_date");				
+				objCategoryDTO.setDateCreated(Date.from(timestamp.toInstant()));
+				timestamp=rs.getTimestamp("last_updation_date");
+				objCategoryDTO.setDateLastModified(Date.from(timestamp.toInstant()));
 
 				// System.out.println("wish_srno = " + rs.getInt("wish_srno")
 				// + "\t  wish_stmt  = " + rs.getString("wish_stmt"));
@@ -126,7 +141,7 @@ public class CategoryDAO extends AbstractDAO {
 
 		Connection con=getConnection();
 		PreparedStatement ps = con
-				.prepareStatement("select cat_id,cat_name from t_category order by cat_id");
+				.prepareStatement("select cat_id,cat_name,creation_date,last_updation_date from t_category order by cat_id");
 
 		rs = ps.executeQuery();
 		while (rs.next()) {
@@ -134,6 +149,12 @@ public class CategoryDAO extends AbstractDAO {
 			CategoryDTO objCategoryDTO = new CategoryDTO();
 			objCategoryDTO.setCatID(rs.getInt("cat_id"));
 			objCategoryDTO.setCatgoryName(rs.getString("cat_name"));
+
+			java.sql.Timestamp timestamp=rs.getTimestamp("creation_date");				
+			objCategoryDTO.setDateCreated(Date.from(timestamp.toInstant()));
+			timestamp=rs.getTimestamp("last_updation_date");
+			objCategoryDTO.setDateLastModified(Date.from(timestamp.toInstant()));
+			
 			vecAllStudName.add(objCategoryDTO);
 		}
 		closeConnection(con);

@@ -5,6 +5,7 @@
 package com.p.interview.mgmt.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Vector;
@@ -25,7 +26,7 @@ public class QuestionDAO extends AbstractDAO {
 			ResultSet rs = null;
 			Connection con = getConnection();
 			PreparedStatement ps = con
-					.prepareStatement("select * from t_catg_ques where ques_id=? and linked_cat_id=? ");
+					.prepareStatement("select ques_id,linked_cat_id,ques,creation_date,last_updation_date from t_catg_ques where ques_id=? and linked_cat_id=? ");
 			int j = 1;
 			// where
 			ps.setInt(j++, objQuestionDTO.getQuestionID());
@@ -47,7 +48,7 @@ public class QuestionDAO extends AbstractDAO {
 
 	public void saveDetails(QuestionDTO objQuestionDTO) throws Exception {
 		Connection con = getConnection();
-		PreparedStatement ps = con.prepareStatement("insert into t_catg_ques(ques_id,linked_cat_id,ques) values (?,?,?)");
+		PreparedStatement ps = con.prepareStatement("insert into t_catg_ques(ques_id,linked_cat_id,ques,creation_date,last_updation_date) values (?,?,?,?,?)");
 		// int id = Integer.parseInt(txtStudID.getText());
 		int j = 1;
 		int nextWish_srno = generateNextsrno(objQuestionDTO);
@@ -55,6 +56,11 @@ public class QuestionDAO extends AbstractDAO {
 		ps.setInt(j++, objQuestionDTO.getQuestionID());
 		ps.setInt(j++, objQuestionDTO.getLinkedCatID());
 		ps.setString(j++, objQuestionDTO.getQuestion());
+		
+		java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
+		ps.setTimestamp(j++,  date);
+		ps.setTimestamp(j++,  date);
+		
 		ps.executeUpdate();
 		System.out.println("save");
 		closeConnection(con);
@@ -80,11 +86,15 @@ public class QuestionDAO extends AbstractDAO {
 	public void updateDetails(QuestionDTO objQuestionDTO) throws Exception {
 		Connection con = getConnection();
 		PreparedStatement ps = con.prepareStatement(
-				"update t_catg_ques set " + "ques=? ,linked_cat_id=? where ques_id=? and linked_cat_id=? ");
+				"update t_catg_ques set " + "ques=? ,linked_cat_id=?,last_updation_date=? where ques_id=? and linked_cat_id=? ");
 		// int id = Integer.parseInt(txtStudID.getText());
 		int j = 1;
 		ps.setString(j++, objQuestionDTO.getQuestion());
 		ps.setInt(j++, objQuestionDTO.getLinkedCatID());
+		
+		java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
+		ps.setTimestamp(j++,  date);
+		
 		// where
 		ps.setInt(j++, objQuestionDTO.getQuestionID());
 		ps.setInt(j++, objQuestionDTO.getLinkedCatID());
@@ -98,7 +108,7 @@ public class QuestionDAO extends AbstractDAO {
 			ResultSet rs = null;
 			Connection con = getConnection();
 			PreparedStatement ps = con
-					.prepareStatement("select * from t_catg_ques where ques_id=? and linked_cat_id=?");
+					.prepareStatement("select ques_id,linked_cat_id,ques,creation_date,last_updation_date from t_catg_ques where ques_id=? and linked_cat_id=?");
 			int j = 1;
 			ps.setInt(j++, objQuestionDTO.getQuestionID());
 			ps.setInt(j++, objQuestionDTO.getLinkedCatID());
@@ -109,6 +119,12 @@ public class QuestionDAO extends AbstractDAO {
 				objQuestionDTO.setQuestionID(rs.getInt("ques_id"));
 				objQuestionDTO.setLinkedCatID(rs.getInt("linked_cat_id"));
 				objQuestionDTO.setQuestion(rs.getString("ques"));
+				
+				java.sql.Timestamp timestamp=rs.getTimestamp("creation_date");				
+				objQuestionDTO.setDateCreated(Date.from(timestamp.toInstant()));
+				timestamp=rs.getTimestamp("last_updation_date");
+				objQuestionDTO.setDateLastModified(Date.from(timestamp.toInstant()));
+				
 
 				// System.out.println("wish_srno = " + rs.getInt("wish_srno")
 				// + "\t wish_stmt = " + rs.getString("wish_stmt"));
@@ -130,7 +146,7 @@ public class QuestionDAO extends AbstractDAO {
 
 		Connection con = getConnection();
 		PreparedStatement ps = con.prepareStatement(
-				"select ques_id,linked_cat_id,ques from t_catg_ques where linked_cat_id=? order by ques_id");
+				"select ques_id,linked_cat_id,ques,creation_date,last_updation_date from t_catg_ques where linked_cat_id=? order by ques_id");
 
 		int j = 1;
 		ps.setInt(j++, linkedCategId);
@@ -141,6 +157,12 @@ public class QuestionDAO extends AbstractDAO {
 			objQuestionDTO.setQuestionID(rs.getInt("ques_id"));
 			objQuestionDTO.setLinkedCatID(rs.getInt("linked_cat_id"));
 			objQuestionDTO.setQuestion(rs.getString("ques"));
+			
+			java.sql.Timestamp timestamp=rs.getTimestamp("creation_date");				
+			objQuestionDTO.setDateCreated(Date.from(timestamp.toInstant()));
+			timestamp=rs.getTimestamp("last_updation_date");
+			objQuestionDTO.setDateLastModified(Date.from(timestamp.toInstant()));
+			
 			// String value = rs.getInt("wish_srno") + ":"
 			// + rs.getString("wish_stmt");
 			vecAllStudName.add(objQuestionDTO);
