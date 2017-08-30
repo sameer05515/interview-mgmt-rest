@@ -14,6 +14,7 @@ public abstract class AbstractDTO {
 	
 	protected Date dateCreated;//creation_date
 	protected Date dateLastModified;//last_updation_date
+	protected int rating=1;//rating
 //	private boolean personal;
 	public Date getDateCreated() {
 		return dateCreated;
@@ -26,6 +27,12 @@ public abstract class AbstractDTO {
 	}
 	public void setDateLastModified(Date dateLastModified) {
 		this.dateLastModified = dateLastModified;
+	}
+	public int getRating() {
+		return rating;
+	}
+	public void setRating(int rating) {
+		this.rating = rating;
 	}
     
 }
