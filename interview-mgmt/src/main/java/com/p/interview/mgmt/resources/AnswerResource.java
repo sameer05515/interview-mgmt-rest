@@ -19,12 +19,11 @@ import javax.ws.rs.core.Response;
 import org.apache.log4j.Logger;
 
 import com.p.interview.mgmt.pojo.AnswerDTO;
-import com.p.interview.mgmt.pojo.CategoryDTO;
 import com.p.interview.mgmt.pojo.QuestionDTO;
 import com.p.interview.mgmt.rpc.InterviewRPC;
 
 /**
- * The Class TopicResource.
+ * The Class AnswerResource.
  */
 @Path("categories/{linkedCategoryID}/questions/{linkedQuestionID}/answers")
 public class AnswerResource {
@@ -35,18 +34,20 @@ public class AnswerResource {
 	private InterviewRPC objInterviewRPC = new InterviewRPC();
 
 	/**
-	 * Gets the all topics list.
+	 * Gets the all Answers list.
 	 *
-	 * @return the all topics list
+	 * @return the all Answers list
 	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAll(@Context HttpServletRequest serveletRequest,
+	public Response getAllAnswers(@Context HttpServletRequest serveletRequest,
 			@PathParam("linkedCategoryID") int linkedCategoryID, @PathParam("linkedQuestionID") int linkedQuestionID) {
 
-		logger.info("Entered into getCoachingList method");
+		logger.info(
+				"Entered into com.p.interview.mgmt.resources.AnswerResource.getAllAnswers(HttpServletRequest, int, int) method");
 
-		logger.info("get all category method called");
+		logger.info(
+				"com.p.interview.mgmt.resources.AnswerResource.getAllAnswers(HttpServletRequest, int, int) method called");
 
 		String message = "successfully contacted the restful API server";
 		Vector<AnswerDTO> list = new Vector<>();
@@ -69,67 +70,69 @@ public class AnswerResource {
 	}
 
 	/**
-	 * Gets the topic for given id from list.
+	 * Gets the Answer for given id from list.
 	 *
 	 * @param id
 	 * 
-	 * @return the topic from list for given id
+	 * @return the Answer from list for given id
 	 */
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response get(@PathParam("id") int id, @PathParam("linkedCategoryID") int linkedCategoryID,
+	public Response getAnswer(@PathParam("id") int id, @PathParam("linkedCategoryID") int linkedCategoryID,
 			@PathParam("linkedQuestionID") int linkedQuestionID) {
 
-		logger.info("Entered into getCoachingList method");
+		logger.info("Entered into com.p.interview.mgmt.resources.AnswerResource.getAnswer(int, int, int) method");
 		String message = "successfully contacted the restful API server";
 		logger.info("Information : " + message);
 
-		logger.info("get category method for id " + id + " called");
+		logger.info("com.p.interview.mgmt.resources.AnswerResource.getAnswer(int, int, int) method for id " + id
+				+ " called");
 
 		AnswerDTO objQuestionDTO = new AnswerDTO();
 		objQuestionDTO.setLinkedQuesID(linkedQuestionID);
 		objQuestionDTO.setLinkedCatID(linkedCategoryID);
 		objQuestionDTO.setAnsID(id);
-		
 
 		try {
 			objQuestionDTO = objInterviewRPC.retrieveAnswer(objQuestionDTO);
 			return Response.status(HttpURLConnection.HTTP_OK).entity(objQuestionDTO).build();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Response.status(HttpURLConnection.HTTP_NOT_FOUND).entity("{\"status\":\"" + HttpURLConnection.HTTP_NOT_FOUND
-					+ "\", \"message\": \" no answer found for given id :  " + id + "\"}")
+			return Response.status(HttpURLConnection.HTTP_NOT_FOUND)
+					.entity("{\"status\":\"" + HttpURLConnection.HTTP_NOT_FOUND
+							+ "\", \"message\": \" no answer found for given id :  " + id + "\"}")
 					.build();
 		}
 
 	}
 
 	/**
-	 * Deletes the topic for given id from list.
+	 * Deletes the Answer for given id from list.
 	 *
 	 * @param id
 	 * 
-	 * @return the topic from list for given id
+	 * @return the Answer from list for given id
 	 */
 	@DELETE
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response delete(@PathParam("id") int id, @PathParam("linkedCategoryID") int linkedCategoryID,
+	public Response deleteAnswer(@PathParam("id") int id, @PathParam("linkedCategoryID") int linkedCategoryID,
 			@PathParam("linkedQuestionID") int linkedQuestionID) {
 
-		logger.info("Entered into getCoachingList method");
+		logger.info("Entered into com.p.interview.mgmt.resources.AnswerResource.deleteAnswer(int, int, int) method");
 		String message = "successfully contacted the restful API server";
 
-		logger.info("delete answer method for id " + id + " called");
-		
+		logger.info("com.p.interview.mgmt.resources.AnswerResource.deleteAnswer(int, int, int) method for id " + id
+				+ " called");
+
 		String me = null;
-		
+
 		AnswerDTO objQuestionDTO = new AnswerDTO();
 		objQuestionDTO.setLinkedQuesID(linkedQuestionID);
 		objQuestionDTO.setLinkedCatID(linkedCategoryID);
 		objQuestionDTO.setAnsID(id);
-		
+
 		try {
 			me = objInterviewRPC.deleteAnswer(objQuestionDTO);
 		} catch (Exception e) {
@@ -139,8 +142,9 @@ public class AnswerResource {
 		if (me != null) {
 			return Response.status(HttpURLConnection.HTTP_OK).entity(me).build();
 		} else {
-			return Response.status(HttpURLConnection.HTTP_NOT_FOUND).entity("{\"status\":\"" + HttpURLConnection.HTTP_NOT_FOUND
-					+ "\", \"message\": \" no answer found for given id :  " + id + "\"}")
+			return Response.status(HttpURLConnection.HTTP_NOT_FOUND)
+					.entity("{\"status\":\"" + HttpURLConnection.HTTP_NOT_FOUND
+							+ "\", \"message\": \" no answer found for given id :  " + id + "\"}")
 					.build();
 		}
 
@@ -149,36 +153,32 @@ public class AnswerResource {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response add(AnswerDTO objAnswerDTO, @PathParam("linkedCategoryID") int linkedCategoryID,
+	public Response saveAnswer(AnswerDTO objAnswerDTO, @PathParam("linkedCategoryID") int linkedCategoryID,
 			@PathParam("linkedQuestionID") int linkedQuestionID) {
 
-		logger.info("Entered into getCoachingList method");
-
-		// logger.info("person.getFirstName()" + topic.getTitle() +
-		// "person.getLastName()" + topic.getDescription()
-		// + "topic.isPersonal()" + topic.isPersonal());
+		logger.info(
+				"Entered into com.p.interview.mgmt.resources.AnswerResource.saveAnswer(AnswerDTO, int, int) method");
 
 		String message = "successfully contacted the restful API server";
 
 		logger.info("Information : " + message);
 
-		logger.info("save category method called");
+		logger.info("com.p.interview.mgmt.resources.AnswerResource.saveAnswer(AnswerDTO, int, int) method called");
 
 		/*
 		 * TODO Validation of the topic object came , and if any assertion is
 		 * failing, error response code should be returned to client
 		 */
-		
+
 		objAnswerDTO.setLinkedCatID(linkedCategoryID);
 		objAnswerDTO.setLinkedQuesID(linkedQuestionID);
-		
+
 		try {
-			// topic.setDateCreated(new Date());
-			// topic.setDateLastModified(new Date());
+
 			int c = 1;
 			objInterviewRPC.saveAnswer(objAnswerDTO);
 			return Response.status(HttpURLConnection.HTTP_OK).entity("{\"status\":\"" + HttpURLConnection.HTTP_OK
-					+ "\", \"message\": \" Successfully created new topic : " + c + "\"}").build();
+					+ "\", \"message\": \" Successfully created new Answer : " + c + "\"}").build();
 		} catch (Exception e) {
 
 			/*
@@ -190,7 +190,7 @@ public class AnswerResource {
 
 			return Response.status(HttpURLConnection.HTTP_NOT_FOUND)
 					.entity("{\"status\":\"" + HttpURLConnection.HTTP_NOT_FOUND
-							+ "\", \"message\": \" Error while creating new topic : " + e + "\"}")
+							+ "\", \"message\": \" Error while creating new Answer : " + e + "\"}")
 					.build();
 		}
 	}
@@ -198,19 +198,16 @@ public class AnswerResource {
 	@PUT
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response update(AnswerDTO objAnswerDTO, @PathParam("linkedCategoryID") int linkedCategoryID,
+	public Response updateAnswer(AnswerDTO objAnswerDTO, @PathParam("linkedCategoryID") int linkedCategoryID,
 			@PathParam("linkedQuestionID") int linkedQuestionID) {
 
-		logger.info("Entered into getCoachingList method");
-
-		// logger.info("person.getFirstName()" + topic.getTitle() +
-		// "person.getLastName()" + topic.getDescription()
-		// + "topic.isPersonal()" + topic.isPersonal());
+		logger.info(
+				"Entered into com.p.interview.mgmt.resources.AnswerResource.updateAnswer(AnswerDTO, int, int) method");
 
 		String message = "successfully contacted the restful API server";
 		logger.info("Information : " + message);
 
-		logger.info("update category method called");
+		logger.info("com.p.interview.mgmt.resources.AnswerResource.updateAnswer(AnswerDTO, int, int) method called");
 
 		/*
 		 * TODO Validation of the topic object came , and if any assertion is
@@ -220,7 +217,7 @@ public class AnswerResource {
 		objAnswerDTO.setLinkedQuesID(linkedQuestionID);
 
 		try {
-			// topic.setDateLastModified(new Date());
+
 			boolean b = true;
 			objInterviewRPC.updateAnswer(objAnswerDTO);
 
@@ -228,7 +225,7 @@ public class AnswerResource {
 					.entity("{\"status\":\""
 							+ ((b && true) ? HttpURLConnection.HTTP_OK : HttpURLConnection.HTTP_INTERNAL_ERROR)
 							+ "\", \"message\": \"" + ((b && true) ? "Successfully " : "Unsuccessfully ")
-							+ "updated group " + objAnswerDTO.getAnsID() + "\"}")
+							+ "updated Answer " + objAnswerDTO.getAnsID() + "\"}")
 					.build();
 
 		} catch (Exception e) {
@@ -236,7 +233,7 @@ public class AnswerResource {
 			e.printStackTrace();
 			return Response.status(HttpURLConnection.HTTP_NOT_FOUND)
 					.entity("{\"status\":\"" + HttpURLConnection.HTTP_NOT_FOUND
-							+ "\", \"message\": \" Error while creating new topic : " + e + "\"}")
+							+ "\", \"message\": \" Error while updating Answer : " + e + "\"}")
 					.build();
 		}
 	}

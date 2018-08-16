@@ -114,7 +114,7 @@ public class CategoryDAO extends AbstractDAO {
 			ResultSet rs = null;
 			Connection con=getConnection();
 			PreparedStatement ps = con
-					.prepareStatement("select cat_id,cat_name,creation_date,last_updation_date,rating"
+					.prepareStatement("select cat_id,cat_name,creation_date,last_updation_date,rating,last_read_date"
 							+ " from t_category"
 							+ " where cat_id=?");
 			int j = 1;
@@ -132,6 +132,9 @@ public class CategoryDAO extends AbstractDAO {
 				objCategoryDTO.setDateLastModified(Date.from(timestamp.toInstant()));
 				
 				objCategoryDTO.setRating(rs.getInt("rating"));
+				
+				timestamp=rs.getTimestamp("last_read_date");
+				objCategoryDTO.setDateLastRead(Date.from(timestamp.toInstant()));
 
 				// System.out.println("wish_srno = " + rs.getInt("wish_srno")
 				// + "\t  wish_stmt  = " + rs.getString("wish_stmt"));

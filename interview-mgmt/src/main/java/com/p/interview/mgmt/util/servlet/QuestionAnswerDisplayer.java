@@ -38,13 +38,9 @@ public class QuestionAnswerDisplayer extends HttpServlet {
 							+ "css/lipstick.css\" />").append("<body>")
 					.append("<img src=\"" // + request.getContextPath()
 							+ "css/prem.jpg\" alt=\"logo\"" + " />").toString());
-			// out.println("<html>");
-			// out.println("<title>QuestionAnswerDisplayer</title>"
-			// + "<link rel=\"stylesheet\" type=\"text/css\" href=\""
-			// + request.getContextPath() + "/css/lipstick.css\" />");
-			// out.println("<body>");
 
-			// String docID = request.getParameter("catId").trim();
+
+
 			InterviewRPC intMgmtRPC = new InterviewRPC();
 			Vector<CategoryDTO> listCats = intMgmtRPC.fetchAllCategories();
 			int catCounter = 1;

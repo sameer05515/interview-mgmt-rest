@@ -9,25 +9,22 @@ import java.sql.SQLException;
 
 import com.p.interview.mgmt.util.ConnectionManager;
 
-
-
 /**
  * 
  * @author PREMENDRA
  */
 public abstract class AbstractDAO {
-	//Connection con = getConnection();
-	 
-	 protected Connection getConnection(){
-		 Connection con = ConnectionManager.getInstance().getConnection();
-		 return con;
-	 }
-	 
-	 protected void closeConnection(Connection con){
-		 try {
+
+	protected Connection getConnection() {
+		Connection con = ConnectionManager.getInstance().getConnection();
+		return con;
+	}
+
+	protected void closeConnection(Connection con) {
+		try {
 			con.close();
-		} catch (SQLException e) {			
+		} catch (SQLException e) {
 		}
-	 }
+	}
 
 }

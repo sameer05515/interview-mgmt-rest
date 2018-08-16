@@ -16,6 +16,7 @@ public class QuestionDTO extends AbstractDTO{
     private int linkedCatID;//linked_cat_id
     private String question;//ques
     
+    
     private Vector<AnswerDTO> answers;
 	public int getQuestionID() {
 		return questionID;
@@ -40,6 +41,47 @@ public class QuestionDTO extends AbstractDTO{
 	}
 	public void setAnswers(Vector<AnswerDTO> answers) {
 		this.answers = answers;
+	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("QuestionDTO [questionID=");
+		builder.append(questionID);
+		builder.append(", linkedCatID=");
+		builder.append(linkedCatID);
+		builder.append(", ");
+		if (question != null) {
+			builder.append("question=");
+			builder.append(question);
+			builder.append(", ");
+		}
+		if (answers != null) {
+			builder.append("answers=");
+			builder.append(answers);
+			builder.append(", ");
+		}
+		if (dateCreated != null) {
+			builder.append("dateCreated=");
+			builder.append(dateCreated);
+			builder.append(", ");
+		}
+		if (dateLastModified != null) {
+			builder.append("dateLastModified=");
+			builder.append(dateLastModified);
+			builder.append(", ");
+		}
+		builder.append("rating=");
+		builder.append(rating);
+		builder.append(", ");
+		if (dateLastRead != null) {
+			builder.append("dateLastRead=");
+			builder.append(dateLastRead);
+			builder.append(", ");
+		}
+		builder.append("totalRead=");
+		builder.append(totalRead);
+		builder.append("]");
+		return builder.toString();
 	}
     
 	

@@ -34,6 +34,45 @@ public class CategoryDTO extends AbstractDTO{
 	public void setQuestions(Vector<QuestionDTO> questions) {
 		this.questions = questions;
 	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("CategoryDTO [catID=");
+		builder.append(catID);
+		builder.append(", ");
+		if (catgoryName != null) {
+			builder.append("catgoryName=");
+			builder.append(catgoryName);
+			builder.append(", ");
+		}
+		if (questions != null) {
+			builder.append("questions=");
+			builder.append(questions);
+			builder.append(", ");
+		}
+		if (dateCreated != null) {
+			builder.append("dateCreated=");
+			builder.append(dateCreated);
+			builder.append(", ");
+		}
+		if (dateLastModified != null) {
+			builder.append("dateLastModified=");
+			builder.append(dateLastModified);
+			builder.append(", ");
+		}
+		builder.append("rating=");
+		builder.append(rating);
+		builder.append(", ");
+		if (dateLastRead != null) {
+			builder.append("dateLastRead=");
+			builder.append(dateLastRead);
+			builder.append(", ");
+		}
+		builder.append("totalRead=");
+		builder.append(totalRead);
+		builder.append("]");
+		return builder.toString();
+	}
     
     
     

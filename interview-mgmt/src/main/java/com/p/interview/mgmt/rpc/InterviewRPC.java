@@ -2,6 +2,8 @@ package com.p.interview.mgmt.rpc;
 
 import java.util.Vector;
 
+import javax.ws.rs.PathParam;
+
 import com.p.interview.mgmt.bc.AnswerBC;
 import com.p.interview.mgmt.bc.CategoryBC;
 import com.p.interview.mgmt.bc.QuestionBC;
@@ -74,6 +76,10 @@ public class InterviewRPC {
 
 	public void saveQuestion(QuestionDTO objQuestionDTO) throws Exception {
 		objQuestionBC.save(objQuestionDTO);
+	}
+	
+	public void addRead(int linkedCategoryID,int id) throws Exception {
+		objQuestionBC.addRead(linkedCategoryID,id);
 	}
 
 	public void updateQuestion(QuestionDTO objQuestionDTO) throws Exception {

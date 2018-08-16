@@ -15,7 +15,10 @@ public abstract class AbstractDTO {
 	protected Date dateCreated;//creation_date
 	protected Date dateLastModified;//last_updation_date
 	protected int rating=1;//rating
-//	private boolean personal;
+	
+	protected Date dateLastRead;
+	protected int totalRead=0;
+	private boolean personal=false;
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -33,6 +36,24 @@ public abstract class AbstractDTO {
 	}
 	public void setRating(int rating) {
 		this.rating = rating;
+	}
+	public Date getDateLastRead() {
+		return dateLastRead;
+	}
+	public void setDateLastRead(Date dateLastRead) {
+		this.dateLastRead = dateLastRead;
+	}
+	public int getTotalRead() {
+		return totalRead;
+	}
+	public void setTotalRead(int totalRead) {
+		this.totalRead = totalRead;
+	}
+	public boolean getPersonal() {
+		return personal;
+	}
+	public void setPersonal(boolean personal) {
+		this.personal = personal;
 	}
     
 }

@@ -177,7 +177,7 @@ public class AnswerDAO extends AbstractDAO {
 
 		Connection con=getConnection();
 		PreparedStatement ps = con
-				.prepareStatement("select ans_id,linked_ques_id,answer,linked_cat_id,creation_date,last_updation_date,rating"
+				.prepareStatement("select ans_id,linked_ques_id,answer,linked_cat_id,creation_date,last_updation_date,rating,last_read_date"
 						+ " from t_catg_ques_ans"
 						+ " where linked_ques_id=? and linked_cat_id=? order by last_updation_date desc");
 
@@ -201,6 +201,9 @@ public class AnswerDAO extends AbstractDAO {
 			objAnswerDTO.setDateLastModified(Date.from(timestamp.toInstant()));
 			
 			objAnswerDTO.setRating(rs.getInt("rating"));
+			
+			timestamp=rs.getTimestamp("last_read_date");
+			objAnswerDTO.setDateLastRead(Date.from(timestamp.toInstant()));
 			
 			// String value = rs.getInt("wish_srno") + ":"
 			// + rs.getString("wish_stmt");

@@ -30,6 +30,11 @@ public class QuestionBC extends AbstractBC {
 	public void save(QuestionDTO objQuestionDTO) throws Exception {
 		objQuestionDAO.saveDetails(objQuestionDTO);
 	}
+	
+	public void addRead(int linkedCategoryID,int id) throws Exception {
+		objQuestionDAO.addReadDetails(linkedCategoryID,id);
+		
+	}
 
 	public void update(QuestionDTO objQuestionDTO) throws Exception {
 		objQuestionDAO.updateDetails(objQuestionDTO);
@@ -65,4 +70,6 @@ public class QuestionBC extends AbstractBC {
 		msg += objQuestionDAO.deleteQuestion(objQuestionDTO);
 		return msg;
 	}
+
+	
 }

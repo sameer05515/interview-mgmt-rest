@@ -24,109 +24,105 @@ import com.p.interview.mgmt.exception.RestServiceException;
 import com.p.interview.mgmt.pojo.CategoryDTO;
 import com.p.interview.mgmt.rpc.InterviewRPC;
 
-
 /**
- * The Class TopicResource.
+ * The Class CategoryResource.
  */
 @Path("categories")
 public class CategoryResource {
 
 	/** The Constant logger. */
 	private static final Logger logger = Logger.getLogger(CategoryResource.class.getName());
-	
-	private InterviewRPC objInterviewRPC=new InterviewRPC(); 
+
+	private InterviewRPC objInterviewRPC = new InterviewRPC();
 
 	/**
-	 * Gets the all topics list.
+	 * Gets the all categories list.
 	 *
-	 * @return the all topics list
+	 * @return the all categories list
 	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAll(@Context HttpServletRequest serveletRequest) {
+	public Response getAllCategories(@Context HttpServletRequest serveletRequest) {
 
-		logger.info("Entered into getAll Categories method");
-		
-		logger.info("get all category method called");
-		
-		
+		logger.info(
+				"Entered into com.p.interview.mgmt.resources.CategoryResource.getAllCategories(HttpServletRequest) method");
 		String message = "successfully contacted the restful API server";
-		
-		Vector<CategoryDTO> list=new Vector<>();
+		logger.info("Information : " + message);
+		logger.info(
+				"com.p.interview.mgmt.resources.CategoryResource.getAllCategories(HttpServletRequest) method called");
+
+		Vector<CategoryDTO> list = new Vector<>();
 		try {
-			list=objInterviewRPC.fetchAllCategories();
+			list = objInterviewRPC.fetchAllCategories();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(HttpURLConnection.HTTP_NOT_FOUND).entity(e).build();
 		}
-		
-		return Response.status(HttpURLConnection.HTTP_OK).entity(list).build(); 
+
+		return Response.status(HttpURLConnection.HTTP_OK).entity(list).build();
 	}
 
 	/**
-	 * Gets the topic for given id from list.
+	 * Gets the Category for given id from list.
 	 *
 	 * @param id
 	 * 
-	 * @return the topic from list for given id
+	 * @return the Category from list for given id
 	 */
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response get(/*@PathParam("id") int id*/@Context UriInfo ui) {
-		
-		MultivaluedMap<String, String> pathParams = ui.getPathParameters();
-		String idstr =pathParams.getFirst("id");
-		int id=Integer.parseInt(idstr);
+	public Response getCategory(/* @PathParam("id") int id */@Context UriInfo ui) {
 
-		logger.info("Entered into getCoachingList method");
+		MultivaluedMap<String, String> pathParams = ui.getPathParameters();
+		String idstr = pathParams.getFirst("id");
+		int id = Integer.parseInt(idstr);
+
+		logger.info("Entered into com.p.interview.mgmt.resources.CategoryResource.getCategory(UriInfo) method");
 		String message = "successfully contacted the restful API server";
 		logger.info("Information : " + message);
-		
-		logger.info("get category method for id "
-				+ id
-				+ " called");
-		
-		CategoryDTO objCategoryDTO=new CategoryDTO();
+
+		logger.info(
+				"com.p.interview.mgmt.resources.CategoryResource.getCategory(UriInfo) method for id " + id + " called");
+
+		CategoryDTO objCategoryDTO = new CategoryDTO();
 		objCategoryDTO.setCatID(id);
-		
+
 		try {
-			objCategoryDTO=objInterviewRPC.retrieveCategory(objCategoryDTO);
+			objCategoryDTO = objInterviewRPC.retrieveCategory(objCategoryDTO);
 		} catch (RestServiceException e) {
 			e.printStackTrace();
-			return Response.status(HttpURLConnection.HTTP_NOT_FOUND).entity("no topic found for given id : " + id)
+			return Response.status(HttpURLConnection.HTTP_NOT_FOUND).entity("no Category found for given id : " + id)
 					.build();
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-
-		return Response.status(HttpURLConnection.HTTP_OK).entity(objCategoryDTO).build(); 
+		return Response.status(HttpURLConnection.HTTP_OK).entity(objCategoryDTO).build();
 
 	}
 
 	/**
-	 * Deletes the topic for given id from list.
+	 * Deletes the Category for given id from list.
 	 *
 	 * @param id
 	 * 
-	 * @return the topic from list for given id
+	 * @return the Category from list for given id
 	 */
 	@DELETE
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response delete(@PathParam("id") int id) {
+	public Response deleteCategory(@PathParam("id") int id) {
 
-		logger.info("Entered into getCoachingList method");
+		logger.info("Entered into com.p.interview.mgmt.resources.CategoryResource.deleteCategory(int) method");
 		String message = "successfully contacted the restful API server";
-		
-		logger.info("delete category method for id "
-				+ id
-				+ " called");
-		
-		String me=null;
+
+		logger.info(
+				"com.p.interview.mgmt.resources.CategoryResource.deleteCategory(int) method for id " + id + " called");
+
+		String me = null;
 		try {
-			me=objInterviewRPC.deleteCategory(id);
+			me = objInterviewRPC.deleteCategory(id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -134,7 +130,7 @@ public class CategoryResource {
 		if (me != null) {
 			return Response.status(HttpURLConnection.HTTP_OK).entity(me).build();
 		} else {
-			return Response.status(HttpURLConnection.HTTP_NOT_FOUND).entity("no topic found for given id : " + id)
+			return Response.status(HttpURLConnection.HTTP_NOT_FOUND).entity("no Category found for given id : " + id)
 					.build();
 		}
 
@@ -143,26 +139,25 @@ public class CategoryResource {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response add(CategoryDTO topic) {
+	public Response saveCategory(CategoryDTO topic) {
 
-		logger.info("Entered into getCoachingList method");
+		logger.info("Entered into com.p.interview.mgmt.resources.CategoryResource.saveCategory(CategoryDTO) method");
 
-		String message = "successfully contacted the restful API server";		
+		String message = "successfully contacted the restful API server";
 		logger.info("Information : " + message);
-		
-		logger.info("save category method called");
+
+		logger.info("com.p.interview.mgmt.resources.CategoryResource.saveCategory(CategoryDTO) method called");
 
 		/*
 		 * TODO Validation of the topic object came , and if any assertion is
 		 * failing, error response code should be returned to client
 		 */
 		try {
-//			topic.setDateCreated(new Date());
-//			topic.setDateLastModified(new Date());
+
 			int c = 1;
 			objInterviewRPC.saveCategory(topic);
 			return Response.status(HttpURLConnection.HTTP_OK).entity("{\"status\":\"" + HttpURLConnection.HTTP_OK
-					+ "\", \"message\": \" Successfully created new topic : " + c + "\"}").build();
+					+ "\", \"message\": \" Successfully created new Category : " + c + "\"}").build();
 		} catch (Exception e) {
 
 			/*
@@ -174,25 +169,22 @@ public class CategoryResource {
 
 			return Response.status(HttpURLConnection.HTTP_NOT_FOUND)
 					.entity("{\"status\":\"" + HttpURLConnection.HTTP_NOT_FOUND
-							+ "\", \"message\": \" Error while creating new topic : " + e + "\"}")
+							+ "\", \"message\": \" Error while creating new Category : " + e + "\"}")
 					.build();
-		}	
+		}
 	}
 
 	@PUT
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response update(CategoryDTO topic) {
+	public Response updateCategory(CategoryDTO topic) {
 
-		logger.info("Entered into getCoachingList method");
-
-//		logger.info("person.getFirstName()" + topic.getTitle() + "person.getLastName()" + topic.getDescription()
-//				+ "topic.isPersonal()" + topic.isPersonal());
+		logger.info("Entered into com.p.interview.mgmt.resources.CategoryResource.updateCategory(CategoryDTO) method");
 
 		String message = "successfully contacted the restful API server";
 		logger.info("Information : " + message);
-		
-		logger.info("update category method called");
+
+		logger.info("com.p.interview.mgmt.resources.CategoryResource.updateCategory(CategoryDTO) method called");
 
 		/*
 		 * TODO Validation of the topic object came , and if any assertion is
@@ -200,7 +192,7 @@ public class CategoryResource {
 		 */
 
 		try {
-//			topic.setDateLastModified(new Date());
+
 			boolean b = true;
 			objInterviewRPC.updateCategory(topic);
 
@@ -208,7 +200,7 @@ public class CategoryResource {
 					.entity("{\"status\":\""
 							+ ((b && true) ? HttpURLConnection.HTTP_OK : HttpURLConnection.HTTP_INTERNAL_ERROR)
 							+ "\", \"message\": \"" + ((b && true) ? "Successfully " : "Unsuccessfully ")
-							+ "updated group " + topic.getCatID() + "\"}")
+							+ "updated Category " + topic.getCatID() + "\"}")
 					.build();
 
 		} catch (Exception e) {
@@ -216,10 +208,10 @@ public class CategoryResource {
 			e.printStackTrace();
 			return Response.status(HttpURLConnection.HTTP_NOT_FOUND)
 					.entity("{\"status\":\"" + HttpURLConnection.HTTP_NOT_FOUND
-							+ "\", \"message\": \" Error while creating new topic : " + e + "\"}")
+							+ "\", \"message\": \" Error while updating Category : " + e + "\"}")
 					.build();
-		}	
-		
+		}
+
 	}
 
 }

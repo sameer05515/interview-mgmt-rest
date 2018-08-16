@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
 
 public class CServletCtxLisener implements ServletContextListener {
 
-	private static String confFolderPath="E:/APPSERVERS/CNX-PROD-apache-tomcat-8.0.35/webapps/interview-mgmt/WEB-INF/conf";
+	private static String confFolderPath="C:/APPSERVERS/TEST-apache-tomcat-8.0.30/webapps/interview-mgmt/WEB-INF/conf";
 	private static String contextPath;
 	static Logger log = Logger.getLogger(CServletCtxLisener.class);
 

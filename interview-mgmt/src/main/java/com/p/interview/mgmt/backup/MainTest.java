@@ -16,24 +16,52 @@ import com.p.interview.mgmt.rpc.InterviewRPC;
 
 public class MainTest {
 
-	public static String jsonDataDirectory = "C:/Users/Lenovo/Desktop/interview-json-data/";
-	private static InterviewRPC objInterviewRPC=new InterviewRPC(); 
+	public static String jsonDataDirectory = "C:/Users/premendra.kumar/Desktop/db-backup/interview-json-data/";
+	public static final String categoryDataJsonFileName = "category-data.json";
+	private static InterviewRPC objInterviewRPC = new InterviewRPC();
 
 	public static void main(String[] args) {
-		// method1();
-
-		createAndConsumeCategoryJSON(jsonDataDirectory + "category-data.json");		
+		createCategoryJSON(jsonDataDirectory + categoryDataJsonFileName);
 	}
 
-	private static void createAndConsumeCategoryJSON(String categoryDataJsonFileLocation) {
-		Vector<CategoryDTO> list=new Vector<>();
+	public static String createCategoryJSON(String categoryDataJsonFileLocation) {
+		Vector<CategoryDTO> list = new Vector<>();
 		try {
-			list=objInterviewRPC.fetchAllCategories();
+			list = objInterviewRPC.fetchAllCategories();
 		} catch (Exception e) {
 			e.printStackTrace();
-			//return Response.status(HttpURLConnection.HTTP_NOT_FOUND).entity(e).build();
 		}
-		
+
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		Type type = new TypeToken<Vector<CategoryDTO>>() {
+		}.getType();
+		String json = gson.toJson(list, type);
+		System.out.println(json);
+		try {
+			Files.write(Paths.get(categoryDataJsonFileLocation), json.getBytes(), StandardOpenOption.CREATE,
+					StandardOpenOption.TRUNCATE_EXISTING);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		System.out.println("############################################## " + categoryDataJsonFileName
+				+ " file created at given " + "\"" + jsonDataDirectory + "\""
+				+ " location #########################################################");
+
+		return "############################################## " + categoryDataJsonFileName + " file created at given "
+				+ "\"" + jsonDataDirectory + "\""
+				+ " location #########################################################";
+
+	}
+
+	private static void consumeCategoryJSON(String categoryDataJsonFileLocation) {
+		Vector<CategoryDTO> list = new Vector<>();
+		try {
+			list = objInterviewRPC.fetchAllCategories();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		Type type = new TypeToken<Vector<CategoryDTO>>() {
 		}.getType();
@@ -48,24 +76,24 @@ public class MainTest {
 
 		System.out.println(
 				"#######################################################################################################");
-		
-//		String content = "";
-//		try {
-//			content = new String(Files.readAllBytes(Paths.get(filePath)));
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//
-//		List<Group> fromJson = gson.fromJson(content, type);
-//
-//		for (Group task : fromJson) {
-//			System.out.println(task.getId() + " , ");
-//			try {
-//				DAOFactory.getGroupSessionInterface().create(task);
-//			} catch (RestServiceException e) {
-//				e.printStackTrace();
-//			}
-//		}
+
+		// String content = "";
+		// try {
+		// content = new String(Files.readAllBytes(Paths.get(filePath)));
+		// } catch (IOException e) {
+		// e.printStackTrace();
+		// }
+		//
+		// List<Group> fromJson = gson.fromJson(content, type);
+		//
+		// for (Group task : fromJson) {
+		// System.out.println(task.getId() + " , ");
+		// try {
+		// DAOFactory.getGroupSessionInterface().create(task);
+		// } catch (RestServiceException e) {
+		// e.printStackTrace();
+		// }
+		// }
 
 	}
 

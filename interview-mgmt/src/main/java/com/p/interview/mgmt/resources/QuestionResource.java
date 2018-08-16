@@ -18,13 +18,11 @@ import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
 
-import com.p.interview.mgmt.exception.RestServiceException;
-import com.p.interview.mgmt.pojo.CategoryDTO;
 import com.p.interview.mgmt.pojo.QuestionDTO;
 import com.p.interview.mgmt.rpc.InterviewRPC;
 
 /**
- * The Class TopicResource.
+ * The Class QuestionResource.
  */
 @Path("categories/{linkedCategoryID}/questions")
 public class QuestionResource {
@@ -35,18 +33,20 @@ public class QuestionResource {
 	private InterviewRPC objInterviewRPC = new InterviewRPC();
 
 	/**
-	 * Gets the all topics list.
+	 * Gets the all Questions list.
 	 *
-	 * @return the all topics list
+	 * @return the all Questions list
 	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAll(@Context HttpServletRequest serveletRequest,
+	public Response getAllQuestions(@Context HttpServletRequest serveletRequest,
 			@PathParam("linkedCategoryID") int linkedCategoryID) {
 
-		logger.info("Entered into getCoachingList method");
+		logger.info(
+				"Entered into com.p.interview.mgmt.resources.QuestionResource.getAllQuestions(HttpServletRequest, int) method");
 
-		logger.info("get all questions method called");
+		logger.info(
+				"com.p.interview.mgmt.resources.QuestionResource.getAllQuestions(HttpServletRequest, int)s method called");
 
 		String message = "successfully contacted the restful API server";
 
@@ -67,27 +67,24 @@ public class QuestionResource {
 	}
 
 	/**
-	 * Gets the topic for given id from list.
+	 * Gets the Question for given id from list.
 	 *
 	 * @param id
 	 * 
-	 * @return the topic from list for given id
+	 * @return the Question from list for given id
 	 */
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	// public Response get(/*@PathParam("id") int id*/@Context UriInfo ui) {
-	public Response get(@PathParam("id") int id, @PathParam("linkedCategoryID") int linkedCategoryID) {
 
-		// MultivaluedMap<String, String> pathParams = ui.getPathParameters();
-		// String idstr =pathParams.getFirst("id");
-		// int id=Integer.parseInt(idstr);
+	public Response getQuestion(@PathParam("id") int id, @PathParam("linkedCategoryID") int linkedCategoryID) {
 
-		logger.info("Entered into getCoachingList method");
+		logger.info("Entered into com.p.interview.mgmt.resources.QuestionResource.getQuestion(int, int) method");
 		String message = "successfully contacted the restful API server";
 		logger.info("Information : " + message);
 
-		logger.info("get questions method for id " + id + " called");
+		logger.info("com.p.interview.mgmt.resources.QuestionResource.getQuestion(int, int) method for id " + id
+				+ " called");
 
 		QuestionDTO objQuestionDTO = new QuestionDTO();
 		objQuestionDTO.setQuestionID(id);
@@ -98,28 +95,30 @@ public class QuestionResource {
 			return Response.status(HttpURLConnection.HTTP_OK).entity(objQuestionDTO).build();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Response.status(HttpURLConnection.HTTP_NOT_FOUND).entity("{\"status\":\"" + HttpURLConnection.HTTP_NOT_FOUND
-					+ "\", \"message\": \" no question found for given id :  " + id + "\"}")
+			return Response.status(HttpURLConnection.HTTP_NOT_FOUND)
+					.entity("{\"status\":\"" + HttpURLConnection.HTTP_NOT_FOUND
+							+ "\", \"message\": \" no question found for given id :  " + id + "\"}")
 					.build();
 		}
 	}
 
 	/**
-	 * Deletes the topic for given id from list.
+	 * Deletes the Question for given id from list.
 	 *
 	 * @param id
 	 * 
-	 * @return the topic from list for given id
+	 * @return the Question from list for given id
 	 */
 	@DELETE
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response delete(@PathParam("id") int id, @PathParam("linkedCategoryID") int linkedCategoryID) {
+	public Response deleteQuestion(@PathParam("id") int id, @PathParam("linkedCategoryID") int linkedCategoryID) {
 
-		logger.info("Entered into getCoachingList method");
+		logger.info("Entered into com.p.interview.mgmt.resources.QuestionResource.deleteQuestion(int, int) method");
 		String message = "successfully contacted the restful API server";
 
-		logger.info("delete category method for id " + id + " called");
+		logger.info("com.p.interview.mgmt.resources.QuestionResource.deleteQuestion(int, int) method for id " + id
+				+ " called");
 
 		String me = null;
 		QuestionDTO objQuestionDTO = new QuestionDTO();
@@ -134,8 +133,9 @@ public class QuestionResource {
 		if (me != null) {
 			return Response.status(HttpURLConnection.HTTP_OK).entity(me).build();
 		} else {
-			return Response.status(HttpURLConnection.HTTP_NOT_FOUND).entity("{\"status\":\"" + HttpURLConnection.HTTP_NOT_FOUND
-					+ "\", \"message\": \" no question found for given id :  " + id + "\"}")
+			return Response.status(HttpURLConnection.HTTP_NOT_FOUND)
+					.entity("{\"status\":\"" + HttpURLConnection.HTTP_NOT_FOUND
+							+ "\", \"message\": \" no question found for given id :  " + id + "\"}")
 					.build();
 		}
 
@@ -144,21 +144,17 @@ public class QuestionResource {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response add(QuestionDTO objQuestionDTO, @PathParam("linkedCategoryID") int linkedCategoryID) {
+	public Response saveQuestion(QuestionDTO objQuestionDTO, @PathParam("linkedCategoryID") int linkedCategoryID) {
 
-		logger.info("Entered into getCoachingList method");
-
-		// logger.info("person.getFirstName()" + topic.getTitle() +
-		// "person.getLastName()" + topic.getDescription()
-		// + "topic.isPersonal()" + topic.isPersonal());
+		logger.info(
+				"Entered into com.p.interview.mgmt.resources.QuestionResource.saveQuestion(QuestionDTO, int) method");
 
 		String message = "successfully contacted the restful API server";
 
 		logger.info("Information : " + message);
 
-		logger.info("save category method called");
-		
-		//objQuestionDTO.setQuestionID(id);
+		logger.info("com.p.interview.mgmt.resources.QuestionResource.saveQuestion(QuestionDTO, int) method called");
+
 		objQuestionDTO.setLinkedCatID(linkedCategoryID);
 
 		/*
@@ -166,12 +162,11 @@ public class QuestionResource {
 		 * failing, error response code should be returned to client
 		 */
 		try {
-			// topic.setDateCreated(new Date());
-			// topic.setDateLastModified(new Date());
+
 			int c = 1;
 			objInterviewRPC.saveQuestion(objQuestionDTO);
 			return Response.status(HttpURLConnection.HTTP_OK).entity("{\"status\":\"" + HttpURLConnection.HTTP_OK
-					+ "\", \"message\": \" Successfully created new topic : " + c + "\"}").build();
+					+ "\", \"message\": \" Successfully created new Question : " + c + "\"}").build();
 		} catch (Exception e) {
 
 			/*
@@ -183,7 +178,52 @@ public class QuestionResource {
 
 			return Response.status(HttpURLConnection.HTTP_NOT_FOUND)
 					.entity("{\"status\":\"" + HttpURLConnection.HTTP_NOT_FOUND
-							+ "\", \"message\": \" Error while creating new topic : " + e + "\"}")
+							+ "\", \"message\": \" Error while creating new Question : " + e + "\"}")
+					.build();
+		}
+
+	}
+
+	// ###########Save Read time#########
+	@PUT
+	@Path("/{id}/markread")
+	@Produces(MediaType.APPLICATION_JSON)
+	// @Consumes(MediaType.APPLICATION_JSON)
+	public Response addRead(@PathParam("linkedCategoryID") int linkedCategoryID, @PathParam("id") int id) {
+
+		logger.info("Entered into com.p.interview.mgmt.resources.QuestionResource.addRead(int, int) method");
+
+		String message = "successfully contacted the restful API server";
+
+		logger.info("Information : " + message);
+
+		logger.info("com.p.interview.mgmt.resources.QuestionResource.addRead(int, int) called");
+
+		/*
+		 * TODO Validation of the topic object came , and if any assertion is
+		 * failing, error response code should be returned to client
+		 */
+		try {
+			// topic.setDateCreated(new Date());
+			// topic.setDateLastModified(new Date());
+			int c = 1;
+			objInterviewRPC.addRead(linkedCategoryID, id);
+			return Response.status(HttpURLConnection.HTTP_OK)
+					.entity("{\"status\":\"" + HttpURLConnection.HTTP_OK
+							+ "\", \"message\": \" Successfully updated read time for given question : " + c + "\"}")
+					.build();
+		} catch (Exception e) {
+
+			/*
+			 * TODO Error response code must be centralised, or if possible use
+			 * SpringREST instead of Jersey framework
+			 */
+			e.printStackTrace();
+			logger.info(e);
+
+			return Response.status(HttpURLConnection.HTTP_NOT_FOUND)
+					.entity("{\"status\":\"" + HttpURLConnection.HTTP_NOT_FOUND
+							+ "\", \"message\": \" Error while updating read time for given question : " + e + "\"}")
 					.build();
 		}
 
@@ -192,20 +232,16 @@ public class QuestionResource {
 	@PUT
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response update(QuestionDTO objQuestionDTO, @PathParam("linkedCategoryID") int linkedCategoryID) {
+	public Response updateQuestion(QuestionDTO objQuestionDTO, @PathParam("linkedCategoryID") int linkedCategoryID) {
 
-		logger.info("Entered into getCoachingList method");
-
-		// logger.info("person.getFirstName()" + topic.getTitle() +
-		// "person.getLastName()" + topic.getDescription()
-		// + "topic.isPersonal()" + topic.isPersonal());
+		logger.info(
+				"Entered into com.p.interview.mgmt.resources.QuestionResource.updateQuestion(QuestionDTO, int) method");
 
 		String message = "successfully contacted the restful API server";
 		logger.info("Information : " + message);
 
-		logger.info("update category method called");
-		
-		//objQuestionDTO.setQuestionID(id);
+		logger.info("com.p.interview.mgmt.resources.QuestionResource.updateQuestion(QuestionDTO, int) method called");
+
 		objQuestionDTO.setLinkedCatID(linkedCategoryID);
 
 		/*
@@ -214,7 +250,7 @@ public class QuestionResource {
 		 */
 
 		try {
-//			topic.setDateLastModified(new Date());
+
 			boolean b = true;
 			objInterviewRPC.updateQuestion(objQuestionDTO);
 
@@ -222,7 +258,7 @@ public class QuestionResource {
 					.entity("{\"status\":\""
 							+ ((b && true) ? HttpURLConnection.HTTP_OK : HttpURLConnection.HTTP_INTERNAL_ERROR)
 							+ "\", \"message\": \"" + ((b && true) ? "Successfully " : "Unsuccessfully ")
-							+ "updated group " + objQuestionDTO.getQuestionID() + "\"}")
+							+ "updated Question " + objQuestionDTO.getQuestionID() + "\"}")
 					.build();
 
 		} catch (Exception e) {
@@ -230,9 +266,9 @@ public class QuestionResource {
 			e.printStackTrace();
 			return Response.status(HttpURLConnection.HTTP_NOT_FOUND)
 					.entity("{\"status\":\"" + HttpURLConnection.HTTP_NOT_FOUND
-							+ "\", \"message\": \" Error while creating new topic : " + e + "\"}")
+							+ "\", \"message\": \" Error while updating Question : " + e + "\"}")
 					.build();
-		}		
+		}
 	}
 
 }
