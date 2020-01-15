@@ -149,8 +149,8 @@ public class CategoryResource {
 		logger.info("com.p.interview.mgmt.resources.CategoryResource.saveCategory(CategoryDTO) method called");
 
 		/*
-		 * TODO Validation of the topic object came , and if any assertion is
-		 * failing, error response code should be returned to client
+		 * TODO Validation of the topic object came , and if any assertion is failing,
+		 * error response code should be returned to client
 		 */
 		try {
 
@@ -161,8 +161,8 @@ public class CategoryResource {
 		} catch (Exception e) {
 
 			/*
-			 * TODO Error response code must be centralised, or if possible use
-			 * SpringREST instead of Jersey framework
+			 * TODO Error response code must be centralised, or if possible use SpringREST
+			 * instead of Jersey framework
 			 */
 			e.printStackTrace();
 			logger.info(e);
@@ -187,8 +187,8 @@ public class CategoryResource {
 		logger.info("com.p.interview.mgmt.resources.CategoryResource.updateCategory(CategoryDTO) method called");
 
 		/*
-		 * TODO Validation of the topic object came , and if any assertion is
-		 * failing, error response code should be returned to client
+		 * TODO Validation of the topic object came , and if any assertion is failing,
+		 * error response code should be returned to client
 		 */
 
 		try {

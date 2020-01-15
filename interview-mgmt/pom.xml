@@ -3,7 +3,6 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.p.interview.mgmt</groupId>
 	<artifactId>interview-mgmt</artifactId>
-	<packaging>war</packaging>
 	<version>1.0-SNAPSHOT</version>
 	<name>interview-mgmt Maven Webapp</name>
 	<url>http://maven.apache.org</url>

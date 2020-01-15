@@ -16,7 +16,7 @@ import com.p.interview.mgmt.rpc.InterviewRPC;
 
 public class MainTest {
 
-	public static String jsonDataDirectory = "C:/Users/premendra.kumar/Desktop/db-backup/interview-json-data/";
+	public static String jsonDataDirectory = "C:\\Users\\premendra.kumar\\Desktop\\DUMP\\interview-json-data\\";
 	public static final String categoryDataJsonFileName = "category-data.json";
 	private static InterviewRPC objInterviewRPC = new InterviewRPC();
 
