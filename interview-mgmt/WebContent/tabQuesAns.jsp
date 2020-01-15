@@ -9,16 +9,16 @@
 		<head>
 			<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 			<title>"Question Answer Displayer using jsp Premendra Kumar"</title>
-			<link rel="stylesheet" href="../jquery-ui-1.10.3/themes/base/jquery.ui.all.css">
-			<script src="../jquery-ui-1.10.3/jquery-1.9.1.js"></script>
-			<script src="../jquery-ui-1.10.3/ui/jquery.ui.core.js"></script>
-			<script src="../jquery-ui-1.10.3/ui/jquery.ui.widget.js"></script>
-			<script src="../jquery-ui-1.10.3/ui/jquery.ui.mouse.js"></script>
-			<script src="../jquery-ui-1.10.3/ui/jquery.ui.sortable.js"></script>
-			<script src="../jquery-ui-1.10.3/ui/jquery.ui.accordion.js"></script>
+			<link rel="stylesheet" href="ext-lib/jquery-ui-1.10.3/themes/base/jquery.ui.all.css">
+			<script src="ext-lib/jquery-ui-1.10.3/jquery-1.9.1.js"></script>
+			<script src="ext-lib/jquery-ui-1.10.3/ui/jquery.ui.core.js"></script>
+			<script src="ext-lib/jquery-ui-1.10.3/ui/jquery.ui.widget.js"></script>
+			<script src="ext-lib/jquery-ui-1.10.3/ui/jquery.ui.mouse.js"></script>
+			<script src="ext-lib/jquery-ui-1.10.3/ui/jquery.ui.sortable.js"></script>
+			<script src="ext-lib/jquery-ui-1.10.3/ui/jquery.ui.accordion.js"></script>
 			
-			<script src="../jquery-ui-1.10.3/ui/jquery.ui.tabs.js"></script>
-			<link rel="stylesheet" href="../jquery-ui-1.10.3/demos/demos.css">
+			<script src="ext-lib/jquery-ui-1.10.3/ui/jquery.ui.tabs.js"></script>
+			<link rel="stylesheet" href="ext-lib/jquery-ui-1.10.3/demos/demos.css">
 			<style>
 				/* IE has layout issues when sorting (see #5413) */
 				.group { zoom: 1 }
