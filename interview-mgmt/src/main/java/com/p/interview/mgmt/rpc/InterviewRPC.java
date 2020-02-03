@@ -81,6 +81,10 @@ public class InterviewRPC {
 	public void addRead(int linkedCategoryID,int id) throws Exception {
 		objQuestionBC.addRead(linkedCategoryID,id);
 	}
+	//markPrivate
+	public void markPrivate(int linkedCategoryID,int id) throws Exception {
+		objQuestionBC.markPrivate(linkedCategoryID,id);
+	}
 
 	public void updateQuestion(QuestionDTO objQuestionDTO) throws Exception {
 		objQuestionBC.update(objQuestionDTO);

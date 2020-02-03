@@ -35,6 +35,11 @@ public class QuestionBC extends AbstractBC {
 		objQuestionDAO.addReadDetails(linkedCategoryID,id);
 		
 	}
+	
+	public void markPrivate(int linkedCategoryID,int id) throws Exception {
+		objQuestionDAO.markPrivate(linkedCategoryID,id);
+		
+	}
 
 	public void update(QuestionDTO objQuestionDTO) throws Exception {
 		objQuestionDAO.updateDetails(objQuestionDTO);

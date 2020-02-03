@@ -124,6 +124,44 @@ public class QuestionDAO extends AbstractDAO {
 		closeConnection(con);
 	}
 	
+	
+	/**Create batch to update hidden in category and category_read_history table*/
+	public void markPrivate(int linkedCategoryID,int id) throws Exception {
+
+		Connection con = getConnection();
+		PreparedStatement ps = con.prepareStatement("update t_catg_ques set "
+				+ "hidden=?" + " where ques_id=? and linked_cat_id=? ");
+		// int id = Integer.parseInt(txtStudID.getText());
+		int j = 1;
+//		java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
+//		ps.setTimestamp(j++, date);
+		
+		ps.setBoolean(j++, true);
+
+		// where
+		ps.setInt(j++, id);
+		ps.setInt(j++, linkedCategoryID);
+		
+//		ps.executeUpdate();
+		ps.addBatch();
+		
+//		int next_id=generateNextsrnoIn_t_catg_ques_read_history();
+//		
+//		ps.addBatch("insert into t_catg_ques_read_history (id,ques_id,linked_cat_id,last_read_date) values ("
+//				+ "'"+next_id+"' , "
+//				+ "'"+id+"' , "
+//				+ "'"+linkedCategoryID+"' , "				
+//				+ "'"+date+"' "
+//				+ ")");
+		
+		int counts[]=ps.executeBatch();
+		System.out.println("Batch update done successfully");
+		
+//		ps.addBatch("INSERT INTO `t_catg_ques_read_history`(`id`, `ques_id`, `linked_cat_id`, `last_read_date`) VALUES ([value-1],[value-2],[value-3],[value-4])");
+		System.out.println("update");
+		closeConnection(con);
+	}
+	
 	private int generateNextsrnoIn_t_catg_ques_read_history() throws Exception {
 		int nextT_catg_ques_read_history_id = 0;
 		ResultSet rs = null;
@@ -170,7 +208,7 @@ public class QuestionDAO extends AbstractDAO {
 			Connection con = getConnection();
 			PreparedStatement ps = con
 					.prepareStatement("select ques_id,linked_cat_id,ques,creation_date,last_updation_date,rating,last_read_date,"
-							+ " ( select count(*) from t_catg_ques_read_history where ques_id = ? AND linked_cat_id = ?) as total_read "
+							+ " ( select count(*) from t_catg_ques_read_history,hidden where ques_id = ? AND linked_cat_id = ?) as total_read "
 							+ " from t_catg_ques where ques_id=? and linked_cat_id=?");
 			int j = 1;
 			
@@ -198,6 +236,8 @@ public class QuestionDAO extends AbstractDAO {
 				objQuestionDTO.setDateLastRead(Date.from(timestamp.toInstant()));
 				
 				objQuestionDTO.setTotalRead(rs.getInt("total_read"));
+				
+				objQuestionDTO.setPersonal(rs.getBoolean("hidden"));
 
 				// System.out.println("wish_srno = " + rs.getInt("wish_srno")
 				// + "\t wish_stmt = " + rs.getString("wish_stmt"));
@@ -225,7 +265,7 @@ public class QuestionDAO extends AbstractDAO {
 
 		Connection con = getConnection();
 		PreparedStatement ps = con
-				.prepareStatement("select ques_id,linked_cat_id,ques,creation_date,last_updation_date,rating,last_read_date"
+				.prepareStatement("select ques_id,linked_cat_id,ques,creation_date,last_updation_date,rating,last_read_date,hidden"
 //						+ ","
 							//+ " ( select count(*) from t_catg_ques_read_history where ques_id = ? AND linked_cat_id = ?) as total_read "
 						+ " from t_catg_ques where linked_cat_id=? order by last_updation_date desc");
@@ -249,6 +289,7 @@ public class QuestionDAO extends AbstractDAO {
 			
 			timestamp = rs.getTimestamp("last_read_date");
 			objQuestionDTO.setDateLastRead(Date.from(timestamp.toInstant()));
+			objQuestionDTO.setPersonal(rs.getBoolean("hidden"));
 			
 			//objQuestionDTO.setTotalRead(rs.getInt("total_read"));
 
