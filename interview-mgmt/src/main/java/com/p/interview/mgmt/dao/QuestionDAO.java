@@ -208,7 +208,7 @@ public class QuestionDAO extends AbstractDAO {
 			Connection con = getConnection();
 			PreparedStatement ps = con
 					.prepareStatement("select ques_id,linked_cat_id,ques,creation_date,last_updation_date,rating,last_read_date,"
-							+ " ( select count(*) from t_catg_ques_read_history,hidden where ques_id = ? AND linked_cat_id = ?) as total_read "
+							+ " ( select count(*) from t_catg_ques_read_history where ques_id = ? AND linked_cat_id = ?) as total_read,hidden "
 							+ " from t_catg_ques where ques_id=? and linked_cat_id=?");
 			int j = 1;
 			
