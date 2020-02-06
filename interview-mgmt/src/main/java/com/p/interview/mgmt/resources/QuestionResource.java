@@ -43,10 +43,10 @@ public class QuestionResource {
 			@PathParam("linkedCategoryID") int linkedCategoryID) {
 
 		logger.info(
-				"Entered into com.p.interview.mgmt.resources.QuestionResource.getAllQuestions(HttpServletRequest, int) method");
+				"Entered into c.p.i.m.r.QuestionResource.getAllQuestions(HttpServletRequest, int) method");
 
 		logger.info(
-				"com.p.interview.mgmt.resources.QuestionResource.getAllQuestions(HttpServletRequest, int)s method called");
+				"c.p.i.m.r.QuestionResource.getAllQuestions(HttpServletRequest, int)s method called");
 
 		String message = "successfully contacted the restful API server";
 
@@ -60,6 +60,7 @@ public class QuestionResource {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			logger.info(e);
 			return Response.status(HttpURLConnection.HTTP_NOT_FOUND).entity(e).build();
 		}
 		return Response.status(HttpURLConnection.HTTP_OK).entity(list).build();
@@ -79,11 +80,11 @@ public class QuestionResource {
 
 	public Response getQuestion(@PathParam("id") int id, @PathParam("linkedCategoryID") int linkedCategoryID) {
 
-		logger.info("Entered into com.p.interview.mgmt.resources.QuestionResource.getQuestion(int, int) method");
+		logger.info("Entered into c.p.i.m.r.QuestionResource.getQuestion(int, int) method");
 		String message = "successfully contacted the restful API server";
 		logger.info("Information : " + message);
 
-		logger.info("com.p.interview.mgmt.resources.QuestionResource.getQuestion(int, int) method for id " + id
+		logger.info("c.p.i.m.r.QuestionResource.getQuestion(int, int) method for id " + id
 				+ " called");
 
 		QuestionDTO objQuestionDTO = new QuestionDTO();
@@ -95,6 +96,7 @@ public class QuestionResource {
 			return Response.status(HttpURLConnection.HTTP_OK).entity(objQuestionDTO).build();
 		} catch (Exception e) {
 			e.printStackTrace();
+			logger.info(e);
 			return Response.status(HttpURLConnection.HTTP_NOT_FOUND)
 					.entity("{\"status\":\"" + HttpURLConnection.HTTP_NOT_FOUND
 							+ "\", \"message\": \" no question found for given id :  " + id + "\"}")
@@ -114,10 +116,10 @@ public class QuestionResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteQuestion(@PathParam("id") int id, @PathParam("linkedCategoryID") int linkedCategoryID) {
 
-		logger.info("Entered into com.p.interview.mgmt.resources.QuestionResource.deleteQuestion(int, int) method");
+		logger.info("Entered into c.p.i.m.r.QuestionResource.deleteQuestion(int, int) method");
 		String message = "successfully contacted the restful API server";
 
-		logger.info("com.p.interview.mgmt.resources.QuestionResource.deleteQuestion(int, int) method for id " + id
+		logger.info("c.p.i.m.r.QuestionResource.deleteQuestion(int, int) method for id " + id
 				+ " called");
 
 		String me = null;
@@ -128,6 +130,7 @@ public class QuestionResource {
 			me = objInterviewRPC.deleteQuestion(objQuestionDTO);
 		} catch (Exception e) {
 			e.printStackTrace();
+			logger.info(e);
 		}
 		logger.info("Information : " + message);
 		if (me != null) {
@@ -147,13 +150,13 @@ public class QuestionResource {
 	public Response saveQuestion(QuestionDTO objQuestionDTO, @PathParam("linkedCategoryID") int linkedCategoryID) {
 
 		logger.info(
-				"Entered into com.p.interview.mgmt.resources.QuestionResource.saveQuestion(QuestionDTO, int) method");
+				"Entered into c.p.i.m.r.QuestionResource.saveQuestion(QuestionDTO, int) method");
 
 		String message = "successfully contacted the restful API server";
 
 		logger.info("Information : " + message);
 
-		logger.info("com.p.interview.mgmt.resources.QuestionResource.saveQuestion(QuestionDTO, int) method called");
+		logger.info("c.p.i.m.r.QuestionResource.saveQuestion(QuestionDTO, int) method called");
 
 		objQuestionDTO.setLinkedCatID(linkedCategoryID);
 
@@ -191,13 +194,13 @@ public class QuestionResource {
 	// @Consumes(MediaType.APPLICATION_JSON)
 	public Response addRead(@PathParam("linkedCategoryID") int linkedCategoryID, @PathParam("id") int id) {
 
-		logger.info("Entered into com.p.interview.mgmt.resources.QuestionResource.addRead(int, int) method");
+		logger.info("Entered into c.p.i.m.r.QuestionResource.addRead(int, int) method");
 
 		String message = "successfully contacted the restful API server";
 
 		logger.info("Information : " + message);
 
-		logger.info("com.p.interview.mgmt.resources.QuestionResource.addRead(int, int) called");
+		logger.info("c.p.i.m.r.QuestionResource.addRead(int, int) called");
 
 		/*
 		 * TODO Validation of the topic object came , and if any assertion is
@@ -236,13 +239,13 @@ public class QuestionResource {
 		// @Consumes(MediaType.APPLICATION_JSON)
 		public Response markPrivate(@PathParam("linkedCategoryID") int linkedCategoryID, @PathParam("id") int id) {
 
-			logger.info("Entered into com.p.interview.mgmt.resources.QuestionResource.addRead(int, int) method");
+			logger.info("Entered into c.p.i.m.r.QuestionResource.addRead(int, int) method");
 
 			String message = "successfully contacted the restful API server";
 
 			logger.info("Information : " + message);
 
-			logger.info("com.p.interview.mgmt.resources.QuestionResource.addRead(int, int) called");
+			logger.info("c.p.i.m.r.QuestionResource.addRead(int, int) called");
 
 			/*
 			 * TODO Validation of the topic object came , and if any assertion is
@@ -280,12 +283,12 @@ public class QuestionResource {
 	public Response updateQuestion(QuestionDTO objQuestionDTO, @PathParam("linkedCategoryID") int linkedCategoryID) {
 
 		logger.info(
-				"Entered into com.p.interview.mgmt.resources.QuestionResource.updateQuestion(QuestionDTO, int) method");
+				"Entered into c.p.i.m.r.QuestionResource.updateQuestion(QuestionDTO, int) method");
 
 		String message = "successfully contacted the restful API server";
 		logger.info("Information : " + message);
 
-		logger.info("com.p.interview.mgmt.resources.QuestionResource.updateQuestion(QuestionDTO, int) method called");
+		logger.info("c.p.i.m.r.QuestionResource.updateQuestion(QuestionDTO, int) method called");
 
 		objQuestionDTO.setLinkedCatID(linkedCategoryID);
 
@@ -309,6 +312,7 @@ public class QuestionResource {
 		} catch (Exception e) {
 
 			e.printStackTrace();
+			logger.info(e);
 			return Response.status(HttpURLConnection.HTTP_NOT_FOUND)
 					.entity("{\"status\":\"" + HttpURLConnection.HTTP_NOT_FOUND
 							+ "\", \"message\": \" Error while updating Question : " + e + "\"}")

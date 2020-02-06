@@ -46,12 +46,12 @@ public class MigrationResource {
 	//@Consumes(MediaType.APPLICATION_JSON)
 	public Response createCategoryJSON(@QueryParam("jsonDataDirectory") String jsonDataDirectory) {
 
-		logger.info("Entered into com.p.interview.mgmt.resources.MigrationResource.createCategoryJSON(String) method");
+		logger.info("Entered into c.p.i.m.r.MigrationResource.createCategoryJSON(String) method");
 
 		String message = "successfully contacted the restful API server";		
 		logger.info("Information : " + message);
 		
-		logger.info("com.p.interview.mgmt.resources.MigrationResource.createCategoryJSON(String) method called");
+		logger.info("c.p.i.m.r.MigrationResource.createCategoryJSON(String) method called");
 
 		/*
 		 * TODO Validation of the topic object came , and if any assertion is
@@ -87,7 +87,7 @@ public class MigrationResource {
 		
 		
 
-		logger.info("Entered into com.p.interview.mgmt.resources.MigrationResource.consumeCategoryJSON(CategoryDTO) method");
+		logger.info("Entered into c.p.i.m.r.MigrationResource.consumeCategoryJSON(CategoryDTO) method");
 
 //		logger.info("person.getFirstName()" + topic.getTitle() + "person.getLastName()" + topic.getDescription()
 //				+ "topic.isPersonal()" + topic.isPersonal());
@@ -95,7 +95,7 @@ public class MigrationResource {
 		String message = "successfully contacted the restful API server";
 		logger.info("Information : " + message);
 		
-		logger.info("com.p.interview.mgmt.resources.MigrationResource.consumeCategoryJSON(CategoryDTO) method called");
+		logger.info("c.p.i.m.r.MigrationResource.consumeCategoryJSON(CategoryDTO) method called");
 
 		/*
 		 * TODO Validation of the topic object came , and if any assertion is
@@ -119,6 +119,7 @@ public class MigrationResource {
 		} catch (Exception e) {
 
 			e.printStackTrace();
+			logger.info(e);
 			return Response.status(HttpURLConnection.HTTP_NOT_FOUND)
 					.entity("{\"status\":\"" + HttpURLConnection.HTTP_NOT_FOUND
 							+ "\", \"message\": \" Error while importing data : " + e + "\"}")

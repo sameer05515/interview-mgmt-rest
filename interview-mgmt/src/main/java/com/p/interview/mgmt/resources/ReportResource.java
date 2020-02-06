@@ -43,11 +43,11 @@ public class ReportResource {
 	public Response getAllCategories(@Context HttpServletRequest serveletRequest) {
 
 		logger.info(
-				"Entered into com.p.interview.mgmt.resources.CategoryResource.getAllCategories(HttpServletRequest) method");
+				"Entered into c.p.i.m.r.CategoryResource.getAllCategories(HttpServletRequest) method");
 		String message = "successfully contacted the restful API server";
 		logger.info("Information : " + message);
 		logger.info(
-				"com.p.interview.mgmt.resources.CategoryResource.getAllCategories(HttpServletRequest) method called");
+				"c.p.i.m.r.CategoryResource.getAllCategories(HttpServletRequest) method called");
 
 		Vector<CategoryDTO> list = new Vector<>();
 		List<QuestionJsonResponseForReport> listQuestionJsonResponseForReport = new ArrayList<QuestionJsonResponseForReport>();
@@ -64,6 +64,7 @@ public class ReportResource {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			logger.info(e);
 			return Response.status(HttpURLConnection.HTTP_NOT_FOUND).entity(e).build();
 		}
 
@@ -83,11 +84,11 @@ public class ReportResource {
 	public Response getAllCategories(@Context HttpServletRequest serveletRequest,@PathParam("categoryId") int categoryId, @PathParam("questionId") int questionId) {
 
 		logger.info(
-				"Entered into com.p.interview.mgmt.resources.CategoryResource.getAllCategories(HttpServletRequest) method");
+				"Entered into c.p.i.m.r.CategoryResource.getAllCategories(HttpServletRequest) method");
 		String message = "successfully contacted the restful API server";
 		logger.info("Information : " + message);
 		logger.info(
-				"com.p.interview.mgmt.resources.CategoryResource.getAllCategories(HttpServletRequest) method called");
+				"c.p.i.m.r.CategoryResource.getAllCategories(HttpServletRequest) method called");
 
 //		Vector<CategoryDTO> list = new Vector<>();
 //		List<QuestionJsonResponseForReport> listQuestionJsonResponseForReport = new ArrayList<QuestionJsonResponseForReport>();
@@ -117,6 +118,7 @@ public class ReportResource {
 //			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			logger.info(e);
 			return Response.status(HttpURLConnection.HTTP_NOT_FOUND).entity(e).build();
 		}
 

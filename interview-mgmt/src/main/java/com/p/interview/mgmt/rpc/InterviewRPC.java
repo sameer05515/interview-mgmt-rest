@@ -2,8 +2,6 @@ package com.p.interview.mgmt.rpc;
 
 import java.util.Vector;
 
-import javax.ws.rs.PathParam;
-
 import com.p.interview.mgmt.bc.AnswerBC;
 import com.p.interview.mgmt.bc.CategoryBC;
 import com.p.interview.mgmt.bc.QuestionBC;

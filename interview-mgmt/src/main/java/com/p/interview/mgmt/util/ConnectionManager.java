@@ -6,6 +6,8 @@ package com.p.interview.mgmt.util;
 
 import java.sql.Connection;
 
+import org.apache.log4j.Logger;
+
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 /**
@@ -17,6 +19,8 @@ public class ConnectionManager {
 	private static ConnectionManager thisInstance;
 
 	private ComboPooledDataSource cpdsInterviewMgmtDB;
+	
+	static Logger logger = Logger.getLogger(ConnectionManager.class);
 
 	// static {
 	// try {
@@ -66,6 +70,7 @@ public class ConnectionManager {
 			cpdsInterviewMgmtDB.setPassword(iagentDBPassword);
 		} catch (Exception e) {
 			System.out.println("ERROR WHILE CONNECTION TO IAGENT DATA SOURCE : " + e);
+			logger.info("ERROR WHILE CONNECTION TO IAGENT DATA SOURCE : ",e);
 		}
 
 	}
@@ -90,6 +95,7 @@ public class ConnectionManager {
 			return iagentDataCon;
 		} catch (Throwable e) {
 			System.out.println("ERROR WHILE CONNECTION TO IAGENT DATA SOURCE : " + e);
+			logger.info("ERROR WHILE CONNECTION TO IAGENT DATA SOURCE : " ,e);
 			return null;
 		}
 	}
