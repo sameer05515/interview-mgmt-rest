@@ -129,7 +129,7 @@ public class InterviewRPC {
 		return objAnswerBC.deleteAnswer(objAnswerDTO);
 	}
 
-	public List<CategQuestionHistory> getQuestionHistory(int linkedCategoryID, int id) {
+	public List<CategQuestionHistory> getQuestionHistory(int linkedCategoryID, int id) throws Exception {
 		return objQuestionBC.getQuestionHistory(linkedCategoryID,id);		
 	}
 }

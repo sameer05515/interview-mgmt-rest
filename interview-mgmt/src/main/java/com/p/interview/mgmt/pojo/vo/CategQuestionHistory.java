@@ -5,14 +5,16 @@ import java.util.Date;
 public class CategQuestionHistory {
 	
 	private int id;
-	private int topicId;
+	private int linkedCatID;//linked_cat_id
+	//private int questionID;
+	private int questionID;
 	private Date dateLastRead;
 	private String action;
 	
-	public CategQuestionHistory(int id, int topicId, Date dateLastReed,String action) {
+	public CategQuestionHistory(int id,int linkedCatID, int questionID, Date dateLastReed,String action) {
 		super();
 		this.id = id;
-		this.topicId = topicId;
+		this.questionID = questionID;
 		this.dateLastRead = dateLastReed;
 		this.setAction(action);
 	}
@@ -28,10 +30,10 @@ public class CategQuestionHistory {
 		this.id = id;
 	}
 	public int getTopicId() {
-		return topicId;
+		return questionID;
 	}
 	public void setTopicId(int topicId) {
-		this.topicId = topicId;
+		this.questionID = topicId;
 	}
 
 	public Date getDateLastRead() {

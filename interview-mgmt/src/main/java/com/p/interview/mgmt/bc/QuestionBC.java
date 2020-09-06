@@ -78,7 +78,7 @@ public class QuestionBC extends AbstractBC {
 		return msg;
 	}
 
-	public List<CategQuestionHistory> getQuestionHistory(int linkedCategoryID, int id) {
+	public List<CategQuestionHistory> getQuestionHistory(int linkedCategoryID, int id) throws Exception {
 		return objQuestionDAO.getQuestionHistory(linkedCategoryID,id);
 	}
 

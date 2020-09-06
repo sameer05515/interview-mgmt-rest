@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -333,9 +335,24 @@ public class QuestionDAO extends AbstractDAO {
 		return msg;
 	}
 
-	public List<CategQuestionHistory> getQuestionHistory(int linkedCategoryID, int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<CategQuestionHistory> getQuestionHistory(int linkedCategoryID, int id) throws Exception {
+		List<CategQuestionHistory> reads=new ArrayList<>();		
+		ResultSet rs = null;
+		Connection con = getConnection();
+		PreparedStatement ps = con
+				.prepareStatement("select id, ques_id, linked_cat_id, last_read_date, action"
+						+ " from t_catg_ques_read_history"
+						+ " where linked_cat_id=? and ques_id=? order by last_read_date desc");
+
+		int j = 1;
+		ps.setInt(j++, linkedCategoryID);
+		rs = ps.executeQuery();
+		while (rs.next()) {
+			CategQuestionHistory c=new CategQuestionHistory();
+			//c.set
+		}
+		
+		return reads;
 	}
 
 }
