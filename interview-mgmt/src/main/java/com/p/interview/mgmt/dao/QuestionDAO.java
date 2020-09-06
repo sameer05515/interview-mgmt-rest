@@ -346,6 +346,7 @@ public class QuestionDAO extends AbstractDAO {
 
 		int j = 1;
 		ps.setInt(j++, linkedCategoryID);
+		ps.setInt(j++, id);
 		rs = ps.executeQuery();
 		while (rs.next()) {
 			CategQuestionHistory c=new CategQuestionHistory();

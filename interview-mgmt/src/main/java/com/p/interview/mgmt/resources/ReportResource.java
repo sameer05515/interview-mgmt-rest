@@ -42,12 +42,10 @@ public class ReportResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllCategories(@Context HttpServletRequest serveletRequest) {
 
-		logger.info(
-				"Entered into c.p.i.m.r.CategoryResource.getAllCategories(HttpServletRequest) method");
+		logger.info("Entered into c.p.i.m.r.CategoryResource.getAllCategories(HttpServletRequest) method");
 		String message = "successfully contacted the restful API server";
 		logger.info("Information : " + message);
-		logger.info(
-				"c.p.i.m.r.CategoryResource.getAllCategories(HttpServletRequest) method called");
+		logger.info("c.p.i.m.r.CategoryResource.getAllCategories(HttpServletRequest) method called");
 
 		Vector<CategoryDTO> list = new Vector<>();
 		List<QuestionJsonResponseForReport> listQuestionJsonResponseForReport = new ArrayList<QuestionJsonResponseForReport>();
@@ -70,8 +68,6 @@ public class ReportResource {
 
 		return Response.status(HttpURLConnection.HTTP_OK).entity(listQuestionJsonResponseForReport).build();
 	}
-	
-	
 
 	/**
 	 * Gets the all categories list.
@@ -81,31 +77,30 @@ public class ReportResource {
 	@GET
 	@Path("/allQuestions/categories/{categoryId}/questions/{questionId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllCategories(@Context HttpServletRequest serveletRequest,@PathParam("categoryId") int categoryId, @PathParam("questionId") int questionId) {
+	public Response getAllCategories(@Context HttpServletRequest serveletRequest,
+			@PathParam("categoryId") int categoryId, @PathParam("questionId") int questionId) {
 
-		logger.info(
-				"Entered into c.p.i.m.r.CategoryResource.getAllCategories(HttpServletRequest) method");
+		logger.info("Entered into c.p.i.m.r.CategoryResource.getAllCategories(HttpServletRequest) method");
 		String message = "successfully contacted the restful API server";
 		logger.info("Information : " + message);
-		logger.info(
-				"c.p.i.m.r.CategoryResource.getAllCategories(HttpServletRequest) method called");
+		logger.info("c.p.i.m.r.CategoryResource.getAllCategories(HttpServletRequest) method called");
 
 //		Vector<CategoryDTO> list = new Vector<>();
 //		List<QuestionJsonResponseForReport> listQuestionJsonResponseForReport = new ArrayList<QuestionJsonResponseForReport>();
 		QuestionJsonResponseForReport qr;
 		try {
-			CategoryDTO catdto=new CategoryDTO();
+			CategoryDTO catdto = new CategoryDTO();
 			catdto.setCatID(categoryId);
 			catdto = objInterviewRPC.retrieveCategory(catdto);
-			
-			QuestionDTO qdto=new QuestionDTO();
+
+			QuestionDTO qdto = new QuestionDTO();
 			qdto.setQuestionID(questionId);
 			qdto.setLinkedCatID(categoryId);
-			
-			qdto=objInterviewRPC.retrieveQuestion(qdto);
-			
-			qr=new QuestionJsonResponseForReport(catdto, qdto);
-			
+
+			qdto = objInterviewRPC.retrieveQuestion(qdto);
+
+			qr = new QuestionJsonResponseForReport(catdto, qdto);
+
 //			list = objInterviewRPC.fetchAllCategories();
 //			if (list != null) {
 //				for (CategoryDTO c : list) {
@@ -123,6 +118,14 @@ public class ReportResource {
 		}
 
 		return Response.status(HttpURLConnection.HTTP_OK).entity(qr).build();
+	}
+
+	@GET
+	@Path("/allQuestions/history/{action}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllQuestionsHistoryForAction(@Context HttpServletRequest serveletRequest,
+			@PathParam("action") String action) {
+		return null;
 	}
 
 }
