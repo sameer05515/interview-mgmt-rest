@@ -27,7 +27,7 @@ public class InterviewXMLGenerator {
 			generator.refreshXML();
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 

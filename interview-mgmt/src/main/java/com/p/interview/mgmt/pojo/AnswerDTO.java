@@ -38,5 +38,44 @@ public class AnswerDTO extends AbstractDTO{
 	public void setLinkedCatID(int linkedCatID) {
 		this.linkedCatID = linkedCatID;
 	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("AnswerDTO [ansID=");
+		builder.append(ansID);
+		builder.append(", linkedQuesID=");
+		builder.append(linkedQuesID);
+		builder.append(", ");
+		if (answer != null) {
+			builder.append("answer=");
+			builder.append(answer);
+			builder.append(", ");
+		}
+		builder.append("linkedCatID=");
+		builder.append(linkedCatID);
+		builder.append(", ");
+		if (dateCreated != null) {
+			builder.append("dateCreated=");
+			builder.append(dateCreated);
+			builder.append(", ");
+		}
+		if (dateLastModified != null) {
+			builder.append("dateLastModified=");
+			builder.append(dateLastModified);
+			builder.append(", ");
+		}
+		builder.append("rating=");
+		builder.append(rating);
+		builder.append(", ");
+		if (dateLastRead != null) {
+			builder.append("dateLastRead=");
+			builder.append(dateLastRead);
+			builder.append(", ");
+		}
+		builder.append("totalRead=");
+		builder.append(totalRead);
+		builder.append("]");
+		return builder.toString();
+	}
         
 }

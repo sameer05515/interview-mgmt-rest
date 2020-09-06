@@ -54,8 +54,8 @@ public class InterviewRPC {
 		objCategoryBC.update(objCategoryDTO);
 	}
 
-	public void retrieveCategory(CategoryDTO objCategoryDTO) throws Exception {
-		objCategoryBC.retrieve(objCategoryDTO);
+	public CategoryDTO retrieveCategory(CategoryDTO objCategoryDTO) throws Exception {
+		return objCategoryBC.retrieve(objCategoryDTO);
 	}
 
 	public Vector<CategoryDTO> fetchAllCategories() throws Exception {
@@ -75,13 +75,21 @@ public class InterviewRPC {
 	public void saveQuestion(QuestionDTO objQuestionDTO) throws Exception {
 		objQuestionBC.save(objQuestionDTO);
 	}
+	
+	public void addRead(int linkedCategoryID,int id) throws Exception {
+		objQuestionBC.addRead(linkedCategoryID,id);
+	}
+	//markPrivate
+	public void markPrivate(int linkedCategoryID,int id) throws Exception {
+		objQuestionBC.markPrivate(linkedCategoryID,id);
+	}
 
 	public void updateQuestion(QuestionDTO objQuestionDTO) throws Exception {
 		objQuestionBC.update(objQuestionDTO);
 	}
 
-	public void retrieveQuestion(QuestionDTO CategoryDTO) throws Exception {
-		objQuestionBC.retrieve(CategoryDTO);
+	public QuestionDTO retrieveQuestion(QuestionDTO objQuestionDTO) throws Exception {
+		return objQuestionBC.retrieve(objQuestionDTO);
 	}
 
 	public Vector<QuestionDTO> fetchAllQuestionsByCategory(int linkedCategId)
@@ -106,8 +114,8 @@ public class InterviewRPC {
 		objAnswerBC.update(objAnswerDTO);
 	}
 
-	public void retrieveAnswer(AnswerDTO objAnswerDTO) throws Exception {
-		objAnswerBC.retrieve(objAnswerDTO);
+	public AnswerDTO retrieveAnswer(AnswerDTO objAnswerDTO) throws Exception {
+		return objAnswerBC.retrieve(objAnswerDTO);
 	}
 
 	public Vector<AnswerDTO> fetchAllAnswersByQuestion(

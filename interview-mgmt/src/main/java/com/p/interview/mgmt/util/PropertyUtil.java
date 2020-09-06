@@ -29,6 +29,7 @@ public class PropertyUtil {
 				FileInputStream in = new FileInputStream(f);
 				thisInsatace.propCommonUtility.load(in);
 				log.debug("successfully loded property file : " + propFileName);
+				in.close();
 				return true;
 			} else {
 				log.debug("property file not found : " + propFileName);
@@ -62,13 +63,12 @@ public class PropertyUtil {
 	}
 
 	public String getValue(PropertyFile objPropertyFileName, String key,boolean printValue) {
-		// String currentDir = System.getProperty("user.dir");
-		// log.debug("Current dir using System:" + currentDir);
+
 		boolean status = refreshPropertyFile(objPropertyFileName.getName());
 		String p = null;
 		if (status) {
 			p = propCommonUtility.getProperty(key);
-			//log.debug(key + " : " + p);
+
 			if(p!=null){
 				if(printValue){
 					log.debug(key + " : " + p);

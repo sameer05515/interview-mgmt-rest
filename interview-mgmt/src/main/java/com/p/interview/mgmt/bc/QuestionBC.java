@@ -10,14 +10,14 @@ import com.p.interview.mgmt.dao.QuestionDAO;
 import com.p.interview.mgmt.pojo.AnswerDTO;
 import com.p.interview.mgmt.pojo.QuestionDTO;
 
-
-
 /**
  * 
  * @author PREMENDRA
  */
 public class QuestionBC extends AbstractBC {
 	QuestionDAO objQuestionDAO;
+
+	AnswerBC objAnswerBC = new AnswerBC();
 
 	public QuestionBC() {
 		objQuestionDAO = new QuestionDAO();
@@ -30,24 +30,37 @@ public class QuestionBC extends AbstractBC {
 	public void save(QuestionDTO objQuestionDTO) throws Exception {
 		objQuestionDAO.saveDetails(objQuestionDTO);
 	}
+	
+	public void addRead(int linkedCategoryID,int id) throws Exception {
+		objQuestionDAO.addReadDetails(linkedCategoryID,id);
+		
+	}
+	
+	public void markPrivate(int linkedCategoryID,int id) throws Exception {
+		objQuestionDAO.markPrivate(linkedCategoryID,id);
+		
+	}
 
 	public void update(QuestionDTO objQuestionDTO) throws Exception {
 		objQuestionDAO.updateDetails(objQuestionDTO);
 	}
 
-	public void retrieve(QuestionDTO objQuestionDTO) throws Exception {
-		objQuestionDAO.retrieve(objQuestionDTO);
+	public QuestionDTO retrieve(QuestionDTO objQuestionDTO) throws Exception {
+
+		QuestionDTO questionDTO = objQuestionDAO.retrieve(objQuestionDTO);
+
+		Vector<AnswerDTO> objAnswerDTOs = objAnswerBC.fetchAllByQuestion(questionDTO);
+		questionDTO.setAnswers(objAnswerDTOs);
+
+		return questionDTO;
 	}
 
-	public Vector<QuestionDTO> fetchAllByCategory(int linkedCategId)
-			throws Exception {
-		Vector<QuestionDTO> objQuestionDTOs = objQuestionDAO
-				.fetchAllByCategory(linkedCategId);
-		AnswerBC objAnswerBC = new AnswerBC();
-		for (QuestionDTO objCategoryDTO : objQuestionDTOs) {
-			Vector<AnswerDTO> objAnswerDTOs = objAnswerBC
-					.fetchAllByQuestion(objCategoryDTO);
-			objCategoryDTO.setAnswers(objAnswerDTOs);
+	public Vector<QuestionDTO> fetchAllByCategory(int linkedCategId) throws Exception {
+		Vector<QuestionDTO> objQuestionDTOs = objQuestionDAO.fetchAllByCategory(linkedCategId);
+
+		for (QuestionDTO questionDTO : objQuestionDTOs) {
+			Vector<AnswerDTO> objAnswerDTOs = objAnswerBC.fetchAllByQuestion(questionDTO);
+			questionDTO.setAnswers(objAnswerDTOs);
 		}
 		return objQuestionDTOs;
 	}
@@ -59,7 +72,9 @@ public class QuestionBC extends AbstractBC {
 		for (AnswerDTO objAnswerDTO : objAnswerDTOs) {
 			msg += "\n" + objAnswerBC.deleteAnswer(objAnswerDTO);
 		}
-		msg+=objQuestionDAO.deleteQuestion(objQuestionDTO);
+		msg += objQuestionDAO.deleteQuestion(objQuestionDTO);
 		return msg;
 	}
+
+	
 }
