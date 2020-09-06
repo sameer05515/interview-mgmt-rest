@@ -9,18 +9,20 @@ import com.p.interview.mgmt.pojo.QuestionDTO;
 
 public class CategQuestionReadResponse {
 
-	private int topicId;
+	//private int questionID;//ques_id
+    private int linkedCatID;//linked_cat_id
+	private int questionID;
 	private QuestionDTO question;
 	private int count = 0;
 	private List<CategQuestionHistory> reads = new ArrayList<>();
 
-	public CategQuestionReadResponse(int topicId, QuestionDTO topic, List<CategQuestionHistory> reads) {
+	public CategQuestionReadResponse(int linkedCatID,int questionID, QuestionDTO question, List<CategQuestionHistory> reads) {
 		super();
-		this.topicId = topicId;
-		this.question = topic;
+		this.setLinkedCatID(linkedCatID);
+		this.questionID = questionID;
+		this.question = question;
 		if (reads != null && reads.size() > 0) {
 			this.count = reads.size();
-
 			this.reads = reads;
 		}
 	}
@@ -29,26 +31,33 @@ public class CategQuestionReadResponse {
 		super();
 	}
 
-	public int getTopicId() {
-		return topicId;
+	public int getLinkedCatID() {
+		return linkedCatID;
 	}
 
-	public void setTopicId(int topicId) {
-		this.topicId = topicId;
+	public void setLinkedCatID(int linkedCatID) {
+		this.linkedCatID = linkedCatID;
 	}
 
-	public QuestionDTO getTopic() {
+	public int getQuestionID() {
+		return questionID;
+	}
+
+	public void setQuestionID(int questionID) {
+		this.questionID = questionID;
+	}
+
+	public QuestionDTO getQuestion() {
 		return question;
 	}
 
-	public void setTopic(QuestionDTO topic) {
-		this.question = topic;
+	public void setQuestion(QuestionDTO question) {
+		this.question = question;
 	}
 
 	public int getCount() {
 		if (reads != null && reads.size() > 0)
-			this.count=reads.size();
-			
+			this.count=reads.size();			
 			return count;
 	}
 

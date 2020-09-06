@@ -1,6 +1,7 @@
 package com.p.interview.mgmt.resources;
 
 import java.net.HttpURLConnection;
+import java.util.List;
 import java.util.Vector;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,7 @@ import javax.ws.rs.core.Response;
 import org.apache.log4j.Logger;
 
 import com.p.interview.mgmt.pojo.QuestionDTO;
+import com.p.interview.mgmt.pojo.vo.CategQuestionHistory;
 import com.p.interview.mgmt.rpc.InterviewRPC;
 
 /**
@@ -300,7 +302,7 @@ public class QuestionResource {
 				// topic.setDateCreated(new Date());
 				// topic.setDateLastModified(new Date());
 				int c = 1;
-				objInterviewRPC.getQuestionHistory(linkedCategoryID, id);
+				List<CategQuestionHistory> reads=objInterviewRPC.getQuestionHistory(linkedCategoryID, id);
 				return Response.status(HttpURLConnection.HTTP_OK)
 						.entity("{\"status\":\"" + HttpURLConnection.HTTP_OK
 								+ "\", \"message\": \" Successfully updated read time for given question : " + c + "\"}")

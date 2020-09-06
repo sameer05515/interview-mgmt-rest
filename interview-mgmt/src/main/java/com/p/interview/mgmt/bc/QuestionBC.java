@@ -4,11 +4,13 @@
  */
 package com.p.interview.mgmt.bc;
 
+import java.util.List;
 import java.util.Vector;
 
 import com.p.interview.mgmt.dao.QuestionDAO;
 import com.p.interview.mgmt.pojo.AnswerDTO;
 import com.p.interview.mgmt.pojo.QuestionDTO;
+import com.p.interview.mgmt.pojo.vo.CategQuestionHistory;
 
 /**
  * 
@@ -74,6 +76,10 @@ public class QuestionBC extends AbstractBC {
 		}
 		msg += objQuestionDAO.deleteQuestion(objQuestionDTO);
 		return msg;
+	}
+
+	public List<CategQuestionHistory> getQuestionHistory(int linkedCategoryID, int id) {
+		return objQuestionDAO.getQuestionHistory(linkedCategoryID,id);
 	}
 
 	

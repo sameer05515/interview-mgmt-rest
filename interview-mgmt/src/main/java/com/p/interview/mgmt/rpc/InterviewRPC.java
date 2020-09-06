@@ -1,5 +1,6 @@
 package com.p.interview.mgmt.rpc;
 
+import java.util.List;
 import java.util.Vector;
 
 import com.p.interview.mgmt.bc.AnswerBC;
@@ -8,6 +9,7 @@ import com.p.interview.mgmt.bc.QuestionBC;
 import com.p.interview.mgmt.pojo.AnswerDTO;
 import com.p.interview.mgmt.pojo.CategoryDTO;
 import com.p.interview.mgmt.pojo.QuestionDTO;
+import com.p.interview.mgmt.pojo.vo.CategQuestionHistory;
 
 
 
@@ -127,8 +129,7 @@ public class InterviewRPC {
 		return objAnswerBC.deleteAnswer(objAnswerDTO);
 	}
 
-	public void getQuestionHistory(int linkedCategoryID, int id) {
-		// TODO Auto-generated method stub
-		
+	public List<CategQuestionHistory> getQuestionHistory(int linkedCategoryID, int id) {
+		return objQuestionBC.getQuestionHistory(linkedCategoryID,id);		
 	}
 }

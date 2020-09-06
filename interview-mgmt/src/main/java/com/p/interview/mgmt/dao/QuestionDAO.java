@@ -8,10 +8,12 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.List;
 import java.util.Vector;
 
 import com.p.interview.mgmt.exception.RestServiceException;
 import com.p.interview.mgmt.pojo.QuestionDTO;
+import com.p.interview.mgmt.pojo.vo.CategQuestionHistory;
 
 /**
  * 
@@ -329,6 +331,11 @@ public class QuestionDAO extends AbstractDAO {
 		closeConnection(con);
 
 		return msg;
+	}
+
+	public List<CategQuestionHistory> getQuestionHistory(int linkedCategoryID, int id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
