@@ -278,6 +278,48 @@ public class QuestionResource {
 			}
 
 		}
+		
+		@GET
+		@Path("/{id}/mark/{action}")
+		@Produces(MediaType.APPLICATION_JSON)	
+	public Response getQuestionHistory(@PathParam("linkedCategoryID") int linkedCategoryID, 
+			@PathParam("id") int id) {
+			logger.info("Entered into c.p.i.m.r.QuestionResource.addRead(int, int) method");
+
+			String message = "successfully contacted the restful API server";
+
+			logger.info("Information : " + message);
+
+			logger.info("c.p.i.m.r.QuestionResource.addRead(int, int) called");
+
+			/*
+			 * TODO Validation of the topic object came , and if any assertion is
+			 * failing, error response code should be returned to client
+			 */
+			try {
+				// topic.setDateCreated(new Date());
+				// topic.setDateLastModified(new Date());
+				int c = 1;
+				objInterviewRPC.getQuestionHistory(linkedCategoryID, id);
+				return Response.status(HttpURLConnection.HTTP_OK)
+						.entity("{\"status\":\"" + HttpURLConnection.HTTP_OK
+								+ "\", \"message\": \" Successfully updated read time for given question : " + c + "\"}")
+						.build();
+			} catch (Exception e) {
+
+				/*
+				 * TODO Error response code must be centralised, or if possible use
+				 * SpringREST instead of Jersey framework
+				 */
+				e.printStackTrace();
+				logger.info(e);
+
+				return Response.status(HttpURLConnection.HTTP_NOT_FOUND)
+						.entity("{\"status\":\"" + HttpURLConnection.HTTP_NOT_FOUND
+								+ "\", \"message\": \" Error while updating read time for given question : " + e + "\"}")
+						.build();
+			}
+	}
 
 	@PUT
 	@Produces(MediaType.APPLICATION_JSON)

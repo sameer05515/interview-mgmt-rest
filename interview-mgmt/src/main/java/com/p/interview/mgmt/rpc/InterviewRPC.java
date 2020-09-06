@@ -126,4 +126,9 @@ public class InterviewRPC {
 	public String deleteAnswer(AnswerDTO objAnswerDTO) throws Exception {
 		return objAnswerBC.deleteAnswer(objAnswerDTO);
 	}
+
+	public void getQuestionHistory(int linkedCategoryID, int id) {
+		// TODO Auto-generated method stub
+		
+	}
 }
