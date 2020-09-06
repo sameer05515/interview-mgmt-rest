@@ -90,15 +90,16 @@ public class QuestionDAO extends AbstractDAO {
 	}
 
 	/**Create batch to update last read time in category and category_read_history table*/
-	public void addReadDetails(int linkedCategoryID,int id) throws Exception {
+	public void addQuestionHistoryDetails(int linkedCategoryID,int id,String action) throws Exception {
 
 		Connection con = getConnection();
 		PreparedStatement ps = con.prepareStatement("update t_catg_ques set "
-				+ "last_read_date=?" + " where ques_id=? and linked_cat_id=? ");
+				+ "last_read_date=?, action=?" + " where ques_id=? and linked_cat_id=? ");
 		// int id = Integer.parseInt(txtStudID.getText());
 		int j = 1;
 		java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
 		ps.setTimestamp(j++, date);
+		ps.setString(j++, action);
 
 		// where
 		ps.setInt(j++, id);

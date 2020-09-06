@@ -168,6 +168,7 @@ public class QuestionResource {
 
 			int c = 1;
 			objInterviewRPC.saveQuestion(objQuestionDTO);
+//			objInterviewRPC.addQuestionHistory(linkedCategoryID, id,"create");
 			return Response.status(HttpURLConnection.HTTP_OK).entity("{\"status\":\"" + HttpURLConnection.HTTP_OK
 					+ "\", \"message\": \" Successfully created new Question : " + c + "\"}").build();
 		} catch (Exception e) {
@@ -187,12 +188,13 @@ public class QuestionResource {
 
 	}
 
-	// ###########Save Read time#########
+	// ###########Save History (read,update,create) of a Category-Question time#########
 	@PUT
-	@Path("/{id}/markread")
+	@Path("/{id}/mark/{action}")
 	@Produces(MediaType.APPLICATION_JSON)
 	// @Consumes(MediaType.APPLICATION_JSON)
-	public Response addRead(@PathParam("linkedCategoryID") int linkedCategoryID, @PathParam("id") int id) {
+	public Response addQuestionHistory(@PathParam("linkedCategoryID") int linkedCategoryID, 
+			@PathParam("id") int id,@PathParam("action") String action) {
 
 		logger.info("Entered into c.p.i.m.r.QuestionResource.addRead(int, int) method");
 
@@ -210,7 +212,7 @@ public class QuestionResource {
 			// topic.setDateCreated(new Date());
 			// topic.setDateLastModified(new Date());
 			int c = 1;
-			objInterviewRPC.addRead(linkedCategoryID, id);
+			objInterviewRPC.addQuestionHistory(linkedCategoryID, id,action);
 			return Response.status(HttpURLConnection.HTTP_OK)
 					.entity("{\"status\":\"" + HttpURLConnection.HTTP_OK
 							+ "\", \"message\": \" Successfully updated read time for given question : " + c + "\"}")

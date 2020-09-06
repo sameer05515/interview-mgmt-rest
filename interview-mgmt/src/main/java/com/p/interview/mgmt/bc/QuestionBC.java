@@ -31,8 +31,8 @@ public class QuestionBC extends AbstractBC {
 		objQuestionDAO.saveDetails(objQuestionDTO);
 	}
 	
-	public void addRead(int linkedCategoryID,int id) throws Exception {
-		objQuestionDAO.addReadDetails(linkedCategoryID,id);
+	public void addQuestionHistory(int linkedCategoryID,int id,String action) throws Exception {
+		objQuestionDAO.addQuestionHistoryDetails(linkedCategoryID,id,action);
 		
 	}
 	

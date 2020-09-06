@@ -76,8 +76,8 @@ public class InterviewRPC {
 		objQuestionBC.save(objQuestionDTO);
 	}
 	
-	public void addRead(int linkedCategoryID,int id) throws Exception {
-		objQuestionBC.addRead(linkedCategoryID,id);
+	public void addQuestionHistory(int linkedCategoryID,int id,String action) throws Exception {
+		objQuestionBC.addQuestionHistory(linkedCategoryID,id,action);
 	}
 	//markPrivate
 	public void markPrivate(int linkedCategoryID,int id) throws Exception {
