@@ -21,6 +21,7 @@ import org.apache.log4j.Logger;
 
 import com.p.interview.mgmt.pojo.QuestionDTO;
 import com.p.interview.mgmt.pojo.vo.CategQuestionHistory;
+import com.p.interview.mgmt.pojo.vo.CategQuestionReadResponse;
 import com.p.interview.mgmt.rpc.InterviewRPC;
 
 /**
@@ -282,7 +283,7 @@ public class QuestionResource {
 		}
 		
 		@GET
-		@Path("/{id}/mark/{action}")
+		@Path("/{id}/history/{action}")
 		@Produces(MediaType.APPLICATION_JSON)	
 	public Response getQuestionHistory(@PathParam("linkedCategoryID") int linkedCategoryID, 
 			@PathParam("id") int id) {
@@ -302,10 +303,15 @@ public class QuestionResource {
 				// topic.setDateCreated(new Date());
 				// topic.setDateLastModified(new Date());
 				int c = 1;
+				QuestionDTO objQuestionDTO = new QuestionDTO();
+				objQuestionDTO.setQuestionID(id);
+				objQuestionDTO.setLinkedCatID(linkedCategoryID);
+				
+				objQuestionDTO = objInterviewRPC.retrieveQuestion(objQuestionDTO);
 				List<CategQuestionHistory> reads=objInterviewRPC.getQuestionHistory(linkedCategoryID, id);
+				CategQuestionReadResponse resp=new CategQuestionReadResponse(linkedCategoryID, id, objQuestionDTO, reads);
 				return Response.status(HttpURLConnection.HTTP_OK)
-						.entity("{\"status\":\"" + HttpURLConnection.HTTP_OK
-								+ "\", \"message\": \" Successfully updated read time for given question : " + c + "\"}")
+						.entity(resp)
 						.build();
 			} catch (Exception e) {
 

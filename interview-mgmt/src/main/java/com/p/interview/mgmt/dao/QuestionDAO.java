@@ -352,6 +352,10 @@ public class QuestionDAO extends AbstractDAO {
 			c.setId(rs.getInt("id"));
 			c.setAction(rs.getString("action"));
 			c.setLinkedCatID(rs.getInt("linked_cat_id"));
+			c.setQuestionID(rs.getInt("ques_id"));
+			java.sql.Timestamp timestamp = rs.getTimestamp("last_read_date");
+			c.setDateLastRead(Date.from(timestamp.toInstant()));
+			reads.add(c);
 		}
 		
 		return reads;
