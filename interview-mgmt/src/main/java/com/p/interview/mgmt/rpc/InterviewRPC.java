@@ -10,6 +10,7 @@ import com.p.interview.mgmt.pojo.AnswerDTO;
 import com.p.interview.mgmt.pojo.CategoryDTO;
 import com.p.interview.mgmt.pojo.QuestionDTO;
 import com.p.interview.mgmt.pojo.vo.CategQuestionHistory;
+import com.p.interview.mgmt.pojo.vo.CategQuestionHistoryReport;
 
 
 
@@ -131,5 +132,10 @@ public class InterviewRPC {
 
 	public List<CategQuestionHistory> getQuestionHistory(int linkedCategoryID, int id) throws Exception {
 		return objQuestionBC.getQuestionHistory(linkedCategoryID,id);		
+	}
+
+	public List<CategQuestionHistoryReport> getAllQuestionsHistoryForAction(String action) {
+
+		return objQuestionBC.getAllQuestionsHistoryForAction(action);
 	}
 }

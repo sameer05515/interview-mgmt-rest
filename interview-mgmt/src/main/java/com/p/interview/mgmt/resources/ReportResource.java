@@ -19,6 +19,7 @@ import org.apache.log4j.Logger;
 import com.p.interview.mgmt.pojo.CategoryDTO;
 import com.p.interview.mgmt.pojo.QuestionDTO;
 import com.p.interview.mgmt.pojo.QuestionJsonResponseForReport;
+import com.p.interview.mgmt.pojo.vo.CategQuestionHistoryReport;
 import com.p.interview.mgmt.rpc.InterviewRPC;
 
 /**
@@ -125,7 +126,25 @@ public class ReportResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllQuestionsHistoryForAction(@Context HttpServletRequest serveletRequest,
 			@PathParam("action") String action) {
-		return null;
+		logger.info("Entered into c.p.i.m.r.CategoryResource.getAllCategories(HttpServletRequest) method");
+		String message = "successfully contacted the restful API server";
+		logger.info("Information : " + message);
+		logger.info("c.p.i.m.r.CategoryResource.getAllCategories(HttpServletRequest) method called");
+
+
+		List<CategQuestionHistoryReport> list= new ArrayList<>();
+		try {
+			
+			list = objInterviewRPC.getAllQuestionsHistoryForAction(action);
+
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.info(e);
+			return Response.status(HttpURLConnection.HTTP_NOT_FOUND).entity(e).build();
+		}
+
+		return Response.status(HttpURLConnection.HTTP_OK).entity(list).build();
 	}
 
 }

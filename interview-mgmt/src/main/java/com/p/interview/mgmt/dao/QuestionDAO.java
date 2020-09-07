@@ -16,6 +16,7 @@ import java.util.Vector;
 import com.p.interview.mgmt.exception.RestServiceException;
 import com.p.interview.mgmt.pojo.QuestionDTO;
 import com.p.interview.mgmt.pojo.vo.CategQuestionHistory;
+import com.p.interview.mgmt.pojo.vo.CategQuestionHistoryReport;
 
 /**
  * 
@@ -360,6 +361,12 @@ public class QuestionDAO extends AbstractDAO {
 		}
 		
 		return reads;
+	}
+
+	public List<CategQuestionHistoryReport> getAllQuestionsHistoryForAction(String action) {
+		List<CategQuestionHistoryReport> list =new ArrayList<>();
+		
+		return list;
 	}
 
 }
