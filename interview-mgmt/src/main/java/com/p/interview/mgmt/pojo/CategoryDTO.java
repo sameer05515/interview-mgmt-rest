@@ -16,6 +16,7 @@ public class CategoryDTO extends AbstractDTO{
     private String catgoryName;//cat_name
     
     private Vector<QuestionDTO> questions;
+    private int totalQuestionsCount=0;
 	public int getCatID() {
 		return catID;
 	}
@@ -72,6 +73,12 @@ public class CategoryDTO extends AbstractDTO{
 		builder.append(totalRead);
 		builder.append("]");
 		return builder.toString();
+	}
+	public int getTotalQuestionsCount() {
+		return totalQuestionsCount;
+	}
+	public void setTotalQuestionsCount(int totalQuestionsCount) {
+		this.totalQuestionsCount = totalQuestionsCount;
 	}
     
     

@@ -112,7 +112,8 @@ public class CategoryDAO extends AbstractDAO {
 			ResultSet rs = null;
 			Connection con = getConnection();
 			PreparedStatement ps = con
-					.prepareStatement("select cat_id,cat_name,creation_date,last_updation_date,rating,last_read_date"
+					.prepareStatement("select cat_id,cat_name,creation_date,last_updation_date,rating,last_read_date" +
+							", (SELECT COUNT(*) FROM t_catg_ques tcq WHERE tcq.linked_cat_id=cat_id) AS 'totalQuestionsCount'"
 							+ " from t_category" + " where cat_id=?");
 			int j = 1;
 			ps.setInt(j++, objCategoryDTO.getCatID());
@@ -132,6 +133,7 @@ public class CategoryDAO extends AbstractDAO {
 
 				timestamp = rs.getTimestamp("last_read_date");
 				objCategoryDTO.setDateLastRead(Date.from(timestamp.toInstant()));
+				objCategoryDTO.setTotalQuestionsCount(rs.getInt("totalQuestionsCount"));
 
 				// System.out.println("wish_srno = " + rs.getInt("wish_srno")
 				// + "\t wish_stmt = " + rs.getString("wish_stmt"));
