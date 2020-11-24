@@ -8,10 +8,13 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import com.p.interview.mgmt.exception.RestServiceException;
 import com.p.interview.mgmt.pojo.CategoryDTO;
+import com.p.interview.mgmt.pojo.vo.CategoryVO;
 
 /**
  * 
@@ -196,5 +199,35 @@ public class CategoryDAO extends AbstractDAO {
 
 		closeConnection(con);
 		return msg;
+	}
+
+	public List<CategoryVO> getAllCategoriesOptimized() throws Exception {
+		List<CategoryVO> vecAllStudName = new ArrayList<CategoryVO>();
+		ResultSet rs = null;
+
+		Connection con = getConnection();
+		PreparedStatement ps = con.prepareStatement("SELECT tc.cat_id,tc.cat_name,tc.creation_date,tc.last_updation_date,tc.rating,\r\n" + 
+				"(SELECT COUNT(*) FROM t_catg_ques tcq WHERE tcq.linked_cat_id=tc.cat_id) AS 'totalQuestionsCount'\r\n" + 
+				" FROM t_category tc ORDER BY last_updation_date DESC");
+
+		rs = ps.executeQuery();
+		while (rs.next()) {
+			// status = true;
+			CategoryVO objCategoryDTO = new CategoryVO();
+			objCategoryDTO.setCatID(rs.getInt("cat_id"));
+			objCategoryDTO.setCatgoryName(rs.getString("cat_name"));
+
+			java.sql.Timestamp timestamp = rs.getTimestamp("creation_date");
+			objCategoryDTO.setDateCreated(Date.from(timestamp.toInstant()));
+			timestamp = rs.getTimestamp("last_updation_date");
+			objCategoryDTO.setDateLastModified(Date.from(timestamp.toInstant()));
+
+			objCategoryDTO.setRating(rs.getInt("rating"));
+			objCategoryDTO.setTotalQuestionsCount(rs.getInt("totalQuestionsCount"));
+
+			vecAllStudName.add(objCategoryDTO);
+		}
+		closeConnection(con);
+		return vecAllStudName;
 	}
 }

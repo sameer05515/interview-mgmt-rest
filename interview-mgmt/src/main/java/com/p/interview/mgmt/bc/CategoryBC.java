@@ -4,11 +4,13 @@
  */
 package com.p.interview.mgmt.bc;
 
+import java.util.List;
 import java.util.Vector;
 
 import com.p.interview.mgmt.dao.CategoryDAO;
 import com.p.interview.mgmt.pojo.CategoryDTO;
 import com.p.interview.mgmt.pojo.QuestionDTO;
+import com.p.interview.mgmt.pojo.vo.CategoryVO;
 
 /**
  * 
@@ -63,5 +65,10 @@ public class CategoryBC extends AbstractBC {
 		msg += objWishDAO.deleteCategory(catId);
 
 		return msg;
+	}
+
+	public List<CategoryVO> getAllCategoriesOptimized() throws Exception {
+		
+		return objWishDAO.getAllCategoriesOptimized();
 	}
 }

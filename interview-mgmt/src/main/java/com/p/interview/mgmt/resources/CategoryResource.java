@@ -1,8 +1,11 @@
 package com.p.interview.mgmt.resources;
 
 import java.net.HttpURLConnection;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
+import javax.annotation.PreDestroy;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -20,8 +23,10 @@ import javax.ws.rs.core.UriInfo;
 
 import org.apache.log4j.Logger;
 
+import com.google.gson.JsonArray;
 import com.p.interview.mgmt.exception.RestServiceException;
 import com.p.interview.mgmt.pojo.CategoryDTO;
+import com.p.interview.mgmt.pojo.vo.CategoryVO;
 import com.p.interview.mgmt.rpc.InterviewRPC;
 
 /**
@@ -34,6 +39,24 @@ public class CategoryResource {
 	private static final Logger logger = Logger.getLogger(CategoryResource.class.getName());
 
 	private InterviewRPC objInterviewRPC = new InterviewRPC();
+	
+	@GET
+	@Path("/optimized/opti")
+	@Produces(MediaType.APPLICATION_JSON)	
+	public Response getAllCategoriesOptimized(@Context HttpServletRequest serveletRequest) {
+		List<CategoryVO> list = new ArrayList<>();
+		
+		try {
+			list = objInterviewRPC.getAllCategoriesOptimized();
+			//logger.info("Information : " + message);
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.info(e);
+			return Response.status(HttpURLConnection.HTTP_NOT_FOUND).entity(e).build();
+		}
+		
+		return Response.status(HttpURLConnection.HTTP_OK).entity(list).build();
+	}
 
 	/**
 	 * Gets the all categories list.

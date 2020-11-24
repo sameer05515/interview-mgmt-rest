@@ -11,6 +11,7 @@ import com.p.interview.mgmt.pojo.CategoryDTO;
 import com.p.interview.mgmt.pojo.QuestionDTO;
 import com.p.interview.mgmt.pojo.vo.CategQuestionHistory;
 import com.p.interview.mgmt.pojo.vo.CategQuestionHistoryReport;
+import com.p.interview.mgmt.pojo.vo.CategoryVO;
 
 
 
@@ -137,5 +138,10 @@ public class InterviewRPC {
 	public List<CategQuestionHistoryReport> getAllQuestionsHistoryForAction(String action) {
 
 		return objQuestionBC.getAllQuestionsHistoryForAction(action);
+	}
+
+	public List<CategoryVO> getAllCategoriesOptimized() throws Exception {
+		
+		return objCategoryBC.getAllCategoriesOptimized();
 	}
 }
